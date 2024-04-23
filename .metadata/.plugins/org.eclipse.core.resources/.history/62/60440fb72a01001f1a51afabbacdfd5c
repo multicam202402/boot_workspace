@@ -46,7 +46,7 @@ public class NoticeController {
 		
 		List noticeList = noticeService.selectAll(map); //3단계: 일시키기 
 		model.addAttribute("noticeList", noticeList); //4단계: 결과 저장 
-		model.addAttribute("pager", pager); //4단계: 결과 저장 
+		model.addAttribute("pager", pager);
 		
 		return "notice/list";    
 	}
