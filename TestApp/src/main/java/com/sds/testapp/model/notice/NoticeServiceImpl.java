@@ -12,8 +12,15 @@ import com.sds.testapp.exception.NoticeException;
 @Service
 public class NoticeServiceImpl implements NoticeService{
 	
+	
+	
 	@Autowired
 	private NoticeDAO noticeDAO;
+
+	@Override
+	public int getTotalCount() {
+		return noticeDAO.getTotalCount();
+	}
 	
 	@Override
 	public List selectAll(Map map) {
