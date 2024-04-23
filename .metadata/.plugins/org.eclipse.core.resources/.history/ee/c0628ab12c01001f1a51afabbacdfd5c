@@ -29,9 +29,7 @@ public class Pager {
 		
 		//thymeleaf   break문이 없으므로,  lastPage에 대한 조건을 부여한다 
 		//lastPage보다 totalPage가 더 작다면, totalPage가 lastPage가 되면 된다!!
-		if(this.totalPage < this.lastPage) {
-			this.lastPage = this.totalPage;
-		}
+		
 		
 		this.startIndex = (this.currentPage-1)*this.pageSize;
 		this.num = this.totalRecord  - this.startIndex;

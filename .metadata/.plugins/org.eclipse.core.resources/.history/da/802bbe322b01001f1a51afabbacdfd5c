@@ -34,14 +34,10 @@
 	            <tr>
 	            	<td colspan="5">
 	            		<button class="btn btn-primary" onClick="location.href='/notice/writeform';">글등록</button>
-
-						<ul class="pagination float-right">
-						    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-						    <li th:each="i : ${#numbers.sequence(pager.firstPage,pager.lastPage)}" class="page-item">
-						    	<a class="page-link" href="#" th:text="${i}">1</a>
-						    </li>
-						    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-						</ul>	            		
+	            		
+	            		<div class="product_pagination">
+	            			
+	            		</div>
 	            	</td>
 	            </tr>
 	        </tbody>
