@@ -15,5 +15,6 @@ public interface NoticeDAO {
 	public int insert(Notice notice);//한건 넣기
 	public int update(Notice notice); //한건 수정 
 	public int delete(Notice notice); //한건 삭제   
+	public int updateHit(int notice_idx); //조회수 증가
 	
 }

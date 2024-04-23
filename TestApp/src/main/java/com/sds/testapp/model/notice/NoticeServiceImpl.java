@@ -29,7 +29,11 @@ public class NoticeServiceImpl implements NoticeService{
 
 	@Override
 	public Notice select(int notice_idx) {
+		
+		noticeDAO.updateHit(notice_idx);//글 내용 가져오기 전에 조회 증가
+		
 		Notice notice = noticeDAO.select(notice_idx);
+		
 		return notice;
 	}
 
@@ -47,13 +51,17 @@ public class NoticeServiceImpl implements NoticeService{
 		int result = noticeDAO.update(notice);
 		
 		if(result <1) {
-			throw new NoticeException("수정실패");
+			throw new NoticeException("수정 실패");
 		}
 	}
 
 	@Override
-	public void delete(Notice notice) {
-		// TODO Auto-generated method stub
+	public void delete(Notice notice) throws NoticeException{
+		int result = noticeDAO.delete(notice);
+		
+		if(result <1) {
+			throw new NoticeException("삭제 실패");
+		}		
 	}
 	
 }

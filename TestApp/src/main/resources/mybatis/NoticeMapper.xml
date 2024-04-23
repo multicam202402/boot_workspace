@@ -27,6 +27,16 @@
 		where notice_idx=#{notice_idx}
 	</update>
 	
+	<!-- 1건 삭제 -->
+	<delete id="delete" parameterType="int">
+		delete from notice where notice_idx=#{notice_idx}
+	</delete>
+	
+	<!-- 조회수 증가  -->
+	<update id="updateHit" parameterType="int">
+		update notice set hit=hit+1 where notice_idx=#{notice_idx}
+	</update>	
+	
 </mapper>
 
 
