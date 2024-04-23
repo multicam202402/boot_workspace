@@ -15,7 +15,6 @@
     <div class="container">
         <h2>상세보기</h2>
         <form>
-        	<input type="hidden" name="notice_idx" th:value="${notice.notice_idx}">
             <div class="form-group">
                 <input type="text" class="form-control" th:value="${notice.title}" name="title">
             </div>
@@ -36,7 +35,7 @@
 <script type="text/javascript">
 function edit(){
 	$("form").attr({
-		action:"/notice/edit",
+		action:"/notice/regist",
 		method:"post"
 	});	
 	$("form").submit();

@@ -26,7 +26,6 @@
 		update notice  set title=#{title}, writer=#{writer}, content=#{content}
 		where notice_idx=#{notice_idx}
 	</update>
-	
 </mapper>
 
 

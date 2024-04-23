@@ -15,7 +15,6 @@
     <div class="container">
         <h2>상세보기</h2>
         <form>
-        	<input type="hidden" name="notice_idx" th:value="${notice.notice_idx}">
             <div class="form-group">
                 <input type="text" class="form-control" th:value="${notice.title}" name="title">
             </div>
@@ -34,27 +33,20 @@
 </body>
 </html>
 <script type="text/javascript">
-function edit(){
+function regist(){
 	$("form").attr({
-		action:"/notice/edit",
+		action:"/notice/regist",
 		method:"post"
 	});	
 	$("form").submit();
 }
-
 $(function(){
 	$($("button")[0]).click(function(){
-		if(confirm("수정하시겠어요?")){
-			edit();
-		}
+		edit();
 	});
-	
 	$($("button")[1]).click(function(){
-		if(confirm("삭제하시겠습니까?")){
-			del();
-		}
+		del();
 	});
-	
 	$($("button")[2]).click(function(){
 		location.href="/notice/list";
 	});

@@ -78,17 +78,6 @@ public class NoticeController {
 		return "notice/content";
 	}
 	
-	//수정 요청 처리 
-	@PostMapping("/notice/edit")
-	public String edit(Notice notice) {  
-		System.out.println(notice.getNotice_idx());
-		System.out.println(notice.getTitle());
-		System.out.println(notice.getWriter());
-		System.out.println(notice.getContent());
-		
-		return null;
-	}
-	
 	
 	//컨트롤러가 보유한 메서드들 중 예외가 발생하는 메서드가 있다면 해당 메서드의 실행부는 해당 라인에서 
 	//곧바로 아래의 메서드로 진입하게 됨..

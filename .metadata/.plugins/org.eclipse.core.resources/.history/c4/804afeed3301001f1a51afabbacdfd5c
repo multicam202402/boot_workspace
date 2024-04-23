@@ -21,12 +21,6 @@
 		select * from notice where notice_idx=#{notice_idx}
 	</select>	
 	
-	<!-- 한건 수정  -->
-	<update id="update" parameterType="Notice">
-		update notice  set title=#{title}, writer=#{writer}, content=#{content}
-		where notice_idx=#{notice_idx}
-	</update>
-	
 </mapper>
 
 

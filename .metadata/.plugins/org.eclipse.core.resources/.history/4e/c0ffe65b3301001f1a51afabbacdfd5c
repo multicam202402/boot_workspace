@@ -80,11 +80,7 @@ public class NoticeController {
 	
 	//수정 요청 처리 
 	@PostMapping("/notice/edit")
-	public String edit(Notice notice) {  
-		System.out.println(notice.getNotice_idx());
-		System.out.println(notice.getTitle());
-		System.out.println(notice.getWriter());
-		System.out.println(notice.getContent());
+	public String edit(Notice notice) {
 		
 		return null;
 	}
