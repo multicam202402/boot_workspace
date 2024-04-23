@@ -85,8 +85,10 @@ public class NoticeController {
 		System.out.println(notice.getTitle());
 		System.out.println(notice.getWriter());
 		System.out.println(notice.getContent());
+		 
+		noticeService.update(notice);//3단계: 일 시키기
 		
-		return null;
+		return "redirect:/notice/detail?notice_idx="+notice.getNotice_idx();
 	}
 	
 	

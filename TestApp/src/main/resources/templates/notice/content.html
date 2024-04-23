@@ -42,6 +42,14 @@ function edit(){
 	$("form").submit();
 }
 
+function del(){
+	$("form").attr({
+		action:"/notice/del", 
+		method:"post"
+	});
+	$("form").submit();
+}
+
 $(function(){
 	$($("button")[0]).click(function(){
 		if(confirm("수정하시겠어요?")){

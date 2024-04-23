@@ -43,8 +43,12 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public void update(Notice notice) {
-		// TODO Auto-generated method stub
+	public void update(Notice notice) throws NoticeException{
+		int result = noticeDAO.update(notice);
+		
+		if(result <1) {
+			throw new NoticeException("수정실패");
+		}
 	}
 
 	@Override
