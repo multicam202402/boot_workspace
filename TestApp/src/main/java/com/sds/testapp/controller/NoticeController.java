@@ -68,6 +68,17 @@ public class NoticeController {
 		return mav;
 	}
 	
+	//상세보기 요청 처리 
+	@GetMapping("/notice/detail")
+	public String getDetail(Model model, @RequestParam(value="notice_idx", defaultValue="0") int notice_idx) {
+
+		Notice notice = noticeService.select(notice_idx);//3단계: 일 시키기
+		model.addAttribute("notice", notice);
+		
+		return "notice/content";
+	}
+	
+	
 	//컨트롤러가 보유한 메서드들 중 예외가 발생하는 메서드가 있다면 해당 메서드의 실행부는 해당 라인에서 
 	//곧바로 아래의 메서드로 진입하게 됨..
 	@ExceptionHandler(NoticeException.class)
