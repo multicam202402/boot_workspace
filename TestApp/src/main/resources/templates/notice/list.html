@@ -24,12 +24,12 @@
 	        </thead>
 	        <tbody>
 	            
-	            <tr th:each=" i  : ${#numbers.sequence(1, 10)}">
-	                <td>John</td>
-	                <td>Doe</td>
-	                <td>john@example.com</td>
-	                <td>john@example.com</td>
-	                <td>john@example.com</td>
+	            <tr th:each="notice, i  : ${noticeList}">
+	                <td th:text="${i.index}"></td>
+	                <td th:text="${notice.title}"></td>
+	                <td th:text="${notice.writer}"></td>
+	                <td th:text="${notice.regdate}"></td>
+	                <td th:text="${notice.hit}"></td>
 	            </tr>
 	            <tr>
 	            	<td colspan="5">
