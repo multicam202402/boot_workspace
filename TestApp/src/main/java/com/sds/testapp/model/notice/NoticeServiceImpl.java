@@ -16,8 +16,7 @@ public class NoticeServiceImpl implements NoticeService{
 	
 	@Override
 	public List selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return noticeDAO.selectAll();
 	}
 
 	@Override
