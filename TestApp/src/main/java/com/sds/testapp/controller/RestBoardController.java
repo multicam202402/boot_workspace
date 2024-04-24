@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -76,6 +77,23 @@ public class RestBoardController {
 		Board board = boardService.select(board_idx); //3단계: 일 시키기 
 		
 		return board;
+	}
+	
+	//수정요청 처리 
+	@PutMapping("/board")
+	public ResponseEntity update(Board board) {
+		
+		log.trace("title = "+board.getTitle());
+		log.trace("writer = "+board.getWriter());
+		log.trace("content = "+board.getContent());
+		
+		log.trace("수정요청 받았어요");
+		
+		boardService.update(board);
+		
+		ResponseEntity entity = ResponseEntity.status(HttpStatus.OK).build();
+		
+		return entity;
 	}
 	
 	@ExceptionHandler(BoardException.class)

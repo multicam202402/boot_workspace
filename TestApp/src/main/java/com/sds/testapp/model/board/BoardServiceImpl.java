@@ -40,8 +40,12 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void update(Board board) {
-		// TODO Auto-generated method stub
+	public void update(Board board) throws BoardException{
+		int result = mybatisBoardDAO.update(board);
+		
+		if(result <1) {
+			throw new BoardException("수정실패");
+		}
 		
 	}
 
