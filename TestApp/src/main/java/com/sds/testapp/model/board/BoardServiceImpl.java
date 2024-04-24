@@ -15,6 +15,10 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private MybatisBoardDAO mybatisBoardDAO;
 	
+	@Override
+	public int getTotalCount() {
+		return mybatisBoardDAO.getTotalCount();
+	}
 	
 	public List selectAll(Map map) {
 		return mybatisBoardDAO.selectAll(map);
@@ -22,8 +26,7 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public Board select(int board_idx) {
-		// TODO Auto-generated method stub
-		return null;
+		return mybatisBoardDAO.select(board_idx);
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import com.sds.testapp.domain.Board;
 @Mapper
 public interface MybatisBoardDAO {
 	public List selectAll(Map map);
+	public int getTotalCount();
 	public Board select(int board_idx);
 	public int insert(Board board); // int 로 하는 이유는?  SqlSessionTemplate 을 사용하지 않기 때문에 int 반환
 													//받을 기회가 사라져 버려서..

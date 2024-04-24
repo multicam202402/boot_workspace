@@ -11,7 +11,7 @@ REST (표현적 상태 전송) - Representational State Transfer
 게시물 한건 등록 : /board          POST 
 게시물 한건 요청 : /board/23     GET
 게시물 수정 요청 : /board          PUT (대부분의 웹브라우저가 비활성화)
-게시물 삭제 요청 : /board          DELETE (대부분의 웹브라우저가 비활성화)
+게시물 삭제 요청 : /board/40     DELETE (대부분의 웹브라우저가 비활성화)
 
 
 create  table  board(
@@ -23,7 +23,15 @@ create  table  board(
  , hit int default 0 
 ) default character set utf8;
 
-
+알고리즘 
+[tree]
+1.complete binary tree 
+- 마지막 노드(leaf)를 제외하고 모든 노드가 꽉 채워진 tree
+  이때, 마지막 노드는 모두 채워져 있지 않아도 되지만 
+  좌측부터 순서대로 채워져 있어야 함 
+  
+full binary tree
+perfect binary tree 
 
 
 

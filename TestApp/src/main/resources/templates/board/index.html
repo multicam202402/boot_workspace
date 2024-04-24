@@ -47,7 +47,7 @@
 						</form>
 					</div>
 				</div>
-				<div class="row">결과목록행</div>
+				<div class="row" id="listBox"></div>
 			</div>	
 			<div class="col-md-3">
 				<form id="form3">
@@ -73,6 +73,35 @@
 </html>
 <script type="text/javascript">
 
+//서버에서 전송된, 데이터를 화면에 렌더링하기 
+function render(data){
+	let tag="<table width='100%' border='1px'>";
+	tag+="<tr>";								
+
+	tag+="<th>No</th>";								
+	tag+="<th>제목</th>";								
+	tag+="<th>작성자</th>";								
+	tag+="<th>등록일</th>";								
+	tag+="<th>조회수</th>";								
+	tag+="</tr>";
+	
+	for(let i=0;i<data.length;i++){
+		let board = data[i]; //i번째 json 꺼내기 ?board_idx=3
+		tag+="<tr>";								
+		tag+="<td>No</td>";								
+		tag+="<td><a href='/board/"+board.board_idx+"'>"+board.title+"</a></td>";								
+		tag+="<td>"+board.writer+"</td>";								
+		tag+="<td>"+board.regdate+"</td>";								
+		tag+="<td>"+board.hit+"</td>";								
+		tag+="</tr>";		
+	}
+	
+	tag+="</table>";
+	
+	$("#listBox").html(tag);		
+	
+}
+
 //비동기 방식으로 게시물 목록 가져오기 
 function getList(){
 	$.ajax({
@@ -81,6 +110,7 @@ function getList(){
 		success:function(result , status, xhr){
 			//서버에서 가져온 목록을 화면에 렌더링...
 			console.log(result);
+			render(result);
 		}
 	});	
 }
@@ -107,7 +137,10 @@ function regist(){
 }
 
 $(function(){
+	getList();
+	
 	$("#bt_regist").click(function(){
+		//유효성 체크
 		regist();
 	});	
 });
