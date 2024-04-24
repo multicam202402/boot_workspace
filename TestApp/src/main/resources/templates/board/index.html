@@ -22,11 +22,11 @@
 				    </div>
 				    
 				    <div class="form-group">
-				        <input type="text" class="form-control" placeholder="Enter title" name="title">
+				        <input type="text" class="form-control" placeholder="Enter title" name="writer">
 				    </div>
 				    
 				    <div class="form-group">
-				        <textarea class="form-control" placeholder="Enter title" name="title"></textarea>
+				        <textarea class="form-control" placeholder="Enter title" name="content"></textarea>
 				    </div>
 				    
 				    <button type="button" class="btn btn-info" id="bt_regist">등록</button>
@@ -73,11 +73,20 @@
 </html>
 <script type="text/javascript">
 function regist(){
+	//JQjuer Ajax 에서 data 속성 작성 시 일일이 파라미터를 명시하면, 양이 많으면 유지보수성이 낮아짐
+	//기존의 폼 태그를  data에 대입하는 방법을 이용해보자 , 즉 form태그 안의 컴포넌트들의 파라미터명과 그 값을
+	//문자열화 시켜주는 메서드
+	//console.log($("#form1").serialize()); //title=~~&writer=$~~&content=~~
+	
 	$.ajax({
 		url:"/board",
 		type:"POST",
+		data:$("#form1").serialize(),
 		success:function(result, status, xhr){
-			
+			alert("게시물이 되었습니다");
+		},
+		error:function(xhr, status, err){
+			alert("게시물 등록 실패");
 		}
 	});
 }
