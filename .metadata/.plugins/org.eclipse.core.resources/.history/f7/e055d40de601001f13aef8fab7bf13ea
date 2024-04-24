@@ -5,9 +5,4 @@
 	<insert id="insert" parameterType="Board">
 		insert into board(title, writer, content) values(#{title}, #{writer}, #{content})
 	</insert>
-	
-	<select id="selectAll" parameterType="java.util.Map" resultType="Board">
-		select * from board limit  #{startIndex} , #{rowCount}
-	</select>
-	
 </mapper>

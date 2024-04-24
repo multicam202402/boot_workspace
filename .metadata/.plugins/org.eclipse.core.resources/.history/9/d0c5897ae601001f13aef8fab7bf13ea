@@ -45,8 +45,6 @@ public class RestBoardController {
 	public List getList() {
 		log.trace("게시물 목록 요청 받음");
 		
-		boardService.selectAll(null);
-		
 		return null;
 	}
 	

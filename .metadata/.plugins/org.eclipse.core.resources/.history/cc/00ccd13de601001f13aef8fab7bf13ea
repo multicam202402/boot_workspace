@@ -7,7 +7,7 @@
 	</insert>
 	
 	<select id="selectAll" parameterType="java.util.Map" resultType="Board">
-		select * from board limit  #{startIndex} , #{rowCount}
+		select * from board limit  ${startIndex} , ${rowCount}
 	</select>
 	
 </mapper>
