@@ -104,9 +104,8 @@ class Board{
 
 //서버에서 전송된, 데이터를 화면에 렌더링하기 
 function render(data){
-	let board = new Board(data);
 	
-	$("#listBox").html(board.tag);		
+	$("#listBox").html(tag);		
 	
 }
 

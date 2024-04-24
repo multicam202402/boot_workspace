@@ -16,7 +16,19 @@
 	</select>
 	
 	<select id="selectBySearch" parameterType="java.lang.String" resultType="Board">
-		select * from board where title like concat('%', #{title}, '%')
+		select * from board 
+		<where>
+			<if test="title">
+				title like concat('%', #{title}, '%')
+			</if>
+			<if test="writer">
+				title like concat('%', #{writer}, '%')
+			</if>
+			<if test="content">
+				title like concat('%', #{content}, '%')
+			</if>
+		</where> 
+		
 	</select>
 	
 	<select id="select" parameterType="int" resultType="Board">

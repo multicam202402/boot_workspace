@@ -76,7 +76,7 @@
 </html>
 <script type="text/javascript">
 class Board{
-	constructor(data){
+	constructor(){
 		this.tag="<table width='100%' border='1px'>";
 		this.tag+="<tr>";								
 
@@ -97,16 +97,17 @@ class Board{
 			this.tag+="<td>"+board.hit+"</td>";								
 			this.tag+="</tr>";		
 		}
+		
 		this.tag+="</table>";
+		
 	}
 }
 
 
 //서버에서 전송된, 데이터를 화면에 렌더링하기 
 function render(data){
-	let board = new Board(data);
 	
-	$("#listBox").html(board.tag);		
+	$("#listBox").html(tag);		
 	
 }
 

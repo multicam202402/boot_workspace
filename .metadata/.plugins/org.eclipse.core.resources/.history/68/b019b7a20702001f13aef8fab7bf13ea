@@ -17,6 +17,8 @@
 	
 	<select id="selectBySearch" parameterType="java.lang.String" resultType="Board">
 		select * from board where title like concat('%', #{title}, '%')
+
+		
 	</select>
 	
 	<select id="select" parameterType="int" resultType="Board">
