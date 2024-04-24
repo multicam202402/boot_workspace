@@ -24,6 +24,10 @@
 		where board_idx=#{board_idx}
 	</update>
 	
+	<delete id="delete" parameterType="Board">
+		delete from board where board_idx=#{board_idx}
+	</delete>
+	
 </mapper>
 
 

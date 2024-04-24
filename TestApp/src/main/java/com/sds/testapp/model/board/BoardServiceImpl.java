@@ -50,8 +50,12 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void delete(Board board) {
-		// TODO Auto-generated method stub
+	public void delete(Board board) throws BoardException{
+		int result = mybatisBoardDAO.delete(board);
+		
+		if(result <1) {
+			throw new BoardException("삭제실패");
+		}
 		
 	}
 

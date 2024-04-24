@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,6 +96,21 @@ public class RestBoardController {
 		
 		return entity;
 	}
+	
+	//한건 삭제 요청 처리 
+	@DeleteMapping("/board/{board_idx}")
+	public ResponseEntity del(@PathVariable("board_idx")  int board_idx) {
+		
+		Board board = new Board();
+		board.setBoard_idx(board_idx);
+		
+		boardService.delete(board);
+		
+		ResponseEntity entity = ResponseEntity.status(HttpStatus.OK).build();
+		
+		return entity;
+	}
+	
 	
 	@ExceptionHandler(BoardException.class)
 	public ResponseEntity handle(BoardException e) {

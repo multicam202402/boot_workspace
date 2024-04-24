@@ -167,6 +167,27 @@ function edit(){
 	});
 }
 
+//비동기 삭제 요청
+function del(){
+	$.ajax({
+		url:"/board/"+$("#form3 input[name='board_idx']").val(),
+		type:"DELETE",
+		success:function(result, status, xhr){
+			alert("삭제되었습니다");
+			getList();//목록 갱신 
+			
+			//우측영역 초기화
+			$("#form3 input[name='board_idx']").val("");
+			$("#form3 input[name='title']").val("");
+			$("#form3 input[name='writer']").val("");
+			$("#form3 textarea[name='content']").html("");
+		}, 
+		error:function(xhr, status, err){
+			alert("삭제실패");
+		}
+	});
+}
+
 $(function(){
 	getList();
 	
@@ -186,6 +207,21 @@ $(function(){
 	$("#bt_edit").click(function(){
 		if(confirm("수정하시겠어요?")){
 			edit();
+		}
+	});
+	
+	$("#bt_del").click(function(){
+		if(confirm("삭제하시겠어요?")){
+			if( $("#form3 input[name='title']").val().length<1){
+				alert("좌측에서 게시물을 선택하세요");
+			}else if( $("#form3 input[name='writer']").val().length<1){
+				alert("좌측에서 게시물을 선택하세요");
+			}else if( $("#form3 textarea[name='content']").val().length<1){
+				alert("좌측에서 게시물을 선택하세요");
+			}else{
+				del();
+			}
+
 		}
 	});
 	
