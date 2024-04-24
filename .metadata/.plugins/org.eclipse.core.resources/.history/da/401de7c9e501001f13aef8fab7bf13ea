@@ -1,12 +1,9 @@
 package com.sds.testapp.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,15 +36,6 @@ public class RestBoardController {
 		
 		return entity;
 	}
-	
-	//게시물 목록 요청 처리 
-	@GetMapping("/board")
-	public List getList() {
-		log.trace("게시물 목록 요청 받음");
-		
-		return null;
-	}
-	
 	
 	@ExceptionHandler(BoardException.class)
 	public ResponseEntity handle(BoardException e) {

@@ -79,9 +79,9 @@ function getList(){
 		url:"/board",
 		type:"GET",
 		success:function(result , status, xhr){
-			//서버에서 가져온 목록을 화면에 렌더링...
-			console.log(result);
+			
 		}
+		
 	});	
 }
 

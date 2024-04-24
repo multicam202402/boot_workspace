@@ -72,19 +72,6 @@
 </body>
 </html>
 <script type="text/javascript">
-
-//비동기 방식으로 게시물 목록 가져오기 
-function getList(){
-	$.ajax({
-		url:"/board",
-		type:"GET",
-		success:function(result , status, xhr){
-			//서버에서 가져온 목록을 화면에 렌더링...
-			console.log(result);
-		}
-	});	
-}
-
 function regist(){
 	//JQjuer Ajax 에서 data 속성 작성 시 일일이 파라미터를 명시하면, 양이 많으면 유지보수성이 낮아짐
 	//기존의 폼 태그를  data에 대입하는 방법을 이용해보자 , 즉 form태그 안의 컴포넌트들의 파라미터명과 그 값을
@@ -96,9 +83,7 @@ function regist(){
 		type:"POST",
 		data:$("#form1").serialize(),
 		success:function(result, status, xhr){
-			//alert("게시물이 되었습니다");
-			//실시간 목록 갱신을 위해 서버에 목록을 요청하여 가져오기 
-			getList();
+			alert("게시물이 되었습니다");
 		},
 		error:function(xhr, status, err){
 			alert("게시물 등록 실패");

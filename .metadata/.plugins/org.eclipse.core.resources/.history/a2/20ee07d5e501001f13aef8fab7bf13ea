@@ -43,7 +43,6 @@ public class RestBoardController {
 	//게시물 목록 요청 처리 
 	@GetMapping("/board")
 	public List getList() {
-		log.trace("게시물 목록 요청 받음");
 		
 		return null;
 	}
