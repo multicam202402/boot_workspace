@@ -38,11 +38,11 @@
 						<form id="form2">
 							<select>
 								<option>검색 구분 ▼</option>
-								<option>제목</option>
-								<option>작성자</option>
-								<option>내용</option>
+								<option value="title">제목</option>
 							</select>
-							<input type="text">
+							
+							<input type="text" name="title" placeholder="찾을 제목 입력">
+							
 							<button type="button" class="btn btn-primary" id="bt_search">검색</button>
 						</form>
 					</div>
@@ -188,6 +188,19 @@ function del(){
 	});
 }
 
+//비동기 검색 요청 
+function findList(){
+	$.ajax({
+		url:"/search/board?title="+$("#form2 input[name='title']").val(),
+		type:"GET", 
+		success:function(result, status, xhr){
+			console.log(result);
+			
+			//렌더링..
+		}
+	});
+}
+
 $(function(){
 	getList();
 	
@@ -223,6 +236,11 @@ $(function(){
 			}
 
 		}
+	});
+	
+	//검색 버튼 누르면 
+	$("#bt_search").click(function(){
+		findList();
 	});
 	
 });

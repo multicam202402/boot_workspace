@@ -15,6 +15,10 @@
 		limit  #{startIndex} , #{rowCount}
 	</select>
 	
+	<select id="selectBySearch" parameterType="java.lang.String" resultType="Board">
+		select * from board where title like #{title} 
+	</select>
+	
 	<select id="select" parameterType="int" resultType="Board">
 		select * from board where board_idx=#{board_idx}
 	</select>

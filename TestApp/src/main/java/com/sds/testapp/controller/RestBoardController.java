@@ -111,6 +111,18 @@ public class RestBoardController {
 		return entity;
 	}
 	
+	//검색 요청 처리 
+	@GetMapping("/search/board")
+	public List getListBySearch(Board board) {
+		
+		log.trace("제목은 "+board.getTitle());
+		
+		List boardList = boardService.selectBySearch(board.getTitle()); //3단계: 일 시키기
+		
+		return boardList;
+	}
+	
+	
 	
 	@ExceptionHandler(BoardException.class)
 	public ResponseEntity handle(BoardException e) {

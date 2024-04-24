@@ -20,6 +20,11 @@ public class BoardServiceImpl implements BoardService{
 		return mybatisBoardDAO.getTotalCount();
 	}
 	
+	@Override
+	public List selectBySearch(String title) {
+		return mybatisBoardDAO.selectBySearch(title);
+	}
+	
 	public List selectAll(Map map) {
 		return mybatisBoardDAO.selectAll(map);
 	}

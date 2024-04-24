@@ -6,6 +6,7 @@ import java.util.Map;
 import com.sds.testapp.domain.Board;
 
 public interface BoardService {
+	public List selectBySearch(String title);
 	public int getTotalCount();
 	public List selectAll(Map map);
 	public Board select(int board_idx);

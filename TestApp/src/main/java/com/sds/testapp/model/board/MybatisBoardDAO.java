@@ -12,6 +12,7 @@ import com.sds.testapp.domain.Board;
 //Mybatis 의 id 와 연결됨
 @Mapper
 public interface MybatisBoardDAO {
+	public List selectBySearch(String title);
 	public List selectAll(Map map);
 	public int getTotalCount();
 	public Board select(int board_idx);
