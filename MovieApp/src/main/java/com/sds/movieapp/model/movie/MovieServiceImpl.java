@@ -38,12 +38,7 @@ public class MovieServiceImpl implements MovieService{
 		}
 		return siteMovieList;
 	}
-	
-	//1건 등록
-	public void regist(Movie movie) throws MovieException{
-		movieDAO.insert(movie);
-	}
-	
+
 	//영화 유형 가져오기 
 	@Override
 	public List getMovieTypeList() {
