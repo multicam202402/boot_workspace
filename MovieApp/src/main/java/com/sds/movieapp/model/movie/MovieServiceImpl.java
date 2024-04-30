@@ -35,6 +35,7 @@ public class MovieServiceImpl implements MovieService{
 		for(Movie movie : siteMovieList) {
 			//오픈 api 호출 객체에게   Movie DTO 맡겨서, 채워진 상태로 돌려받자!
 			movieApiService.getMovie(movie);			
+			System.out.println(movie.getUrl());
 		}
 		return siteMovieList;
 	}

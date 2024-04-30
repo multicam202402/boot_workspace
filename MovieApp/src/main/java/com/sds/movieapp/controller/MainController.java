@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sds.movieapp.common.Pager;
+import com.sds.movieapp.domain.Movie;
 import com.sds.movieapp.domain.MovieType;
 import com.sds.movieapp.model.movie.MovieService;
 
@@ -31,10 +32,12 @@ public class MainController {
 		//영화 10편 가져오기
 		Map map = new HashMap();
 		map.put("startIndex", pager.getStartIndex()); //몇번째 부터
-		map.put("rowCount", 20); //몇건
-		movieService.selectAll(map);
+		map.put("rowCount", 10); //몇건
 		
-		List<MovieType> movieTypeList = movieService.getMovieTypeList(); //3단계 : 일 시키기 
+		List<Movie> movieList = movieService.selectAll(map);//3단계 : 일 시키기
+		List<MovieType> movieTypeList = movieService.getMovieTypeList(); //3단계 : 일 시키기
+		
+		model.addAttribute("movieList", movieList);
 		model.addAttribute("movieTypeList", movieTypeList);//4단계: 뷰에 보여줄 결과 저장
 		
 		return "main/index";
