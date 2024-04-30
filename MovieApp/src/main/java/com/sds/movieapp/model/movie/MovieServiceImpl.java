@@ -39,7 +39,16 @@ public class MovieServiceImpl implements MovieService{
 		}
 		return siteMovieList;
 	}
-
+	
+	public Movie select(int movie_idx) {
+		Movie movie = movieDAO.select(movie_idx);
+		
+		//오픈 api에서 추가적인 영화정보 가져오기 (현재 code, url밖에 없으므로..)
+		movieApiService.getMovie(movie);
+		
+		return movie;
+	}
+	
 	//영화 유형 가져오기 
 	@Override
 	public List getMovieTypeList() {

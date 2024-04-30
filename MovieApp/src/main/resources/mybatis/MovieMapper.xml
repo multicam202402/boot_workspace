@@ -9,5 +9,9 @@
 	<select id="selectAll" parameterType="java.util.Map" resultType="Movie">
 		select * from movie limit  #{startIndex} , #{rowCount}
 	</select>	
-
+	
+	<select id="select" parameterType="int" resultType="Movie">
+		select * from movie where movie_idx=#{movie_idx}
+	</select>
+	
 </mapper>	
