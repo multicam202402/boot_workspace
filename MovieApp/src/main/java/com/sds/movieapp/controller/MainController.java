@@ -31,7 +31,7 @@ public class MainController {
 		//영화 10편 가져오기
 		Map map = new HashMap();
 		map.put("startIndex", pager.getStartIndex()); //몇번째 부터
-		map.put("rowCount", 10); //몇건
+		map.put("rowCount", 3); //몇건
 		
 		List<Movie> movieList = movieService.selectAll(map);//3단계 : 일 시키기
 		List<MovieType> movieTypeList = movieService.getMovieTypeList(); //3단계 : 일 시키기
