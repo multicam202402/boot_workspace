@@ -31,8 +31,10 @@ public class MemberController {
 	//결과 처리 후, 로그인 요청한 사용자가 보게될 화면을 보여줘야 하므로, return  값은 html이 되어야 한다..
 	//따라서 ModelAndView or String 와야 함
 	@GetMapping("/member/sns/naver/callback")
-	public ModelAndView naverCallback(String code) {
+	public ModelAndView naverCallback(HttpServletRequest request) {
 		
+		String code = request.getParameter("code");
+
 		/*--------------------------------
 		 * 토큰 요청을 위한 Post 헤더와 Body 구성
 		 *--------------------------------*/
