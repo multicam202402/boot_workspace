@@ -1,6 +1,7 @@
 package com.sds.movieapp.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -111,10 +112,10 @@ public class MemberController {
 		ObjectMapper objectMapper2 = new ObjectMapper();
 		
 		//준비된 DTO가 없을 경우, HashMap 꺼내자 
-		HashMap<String, Object> userMap = new HashMap<String, Object>();
+		HashMap<String, Object> userMap = null;
 		
 		try {
-			objectMapper2.readValue(userBody, HashMap.class); //두번째 인수는 인스턴스가 아닌 동적 클래스
+			userMap = objectMapper2.readValue(userBody, HashMap.class); //두번째 인수는 인스턴스가 아닌 동적 클래스
 																							//이므로, HashMap.class가 와야함
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
@@ -122,6 +123,17 @@ public class MemberController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		Map response = (Map)userMap.get("response");
+		
+		String id =(String)response.get("id");
+		String email =(String)response.get("email");
+		String name =(String)response.get("name");
+		
+		//중복된 회원이 없다면, 가입을 시킨다...
+		
+		//세션을 할당하여, 메인으로 보낸다..
+		
 		
 		return null;
 	}
