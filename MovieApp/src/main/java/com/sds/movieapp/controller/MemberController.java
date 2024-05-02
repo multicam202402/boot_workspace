@@ -12,12 +12,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sds.movieapp.domain.Member;
+import com.sds.movieapp.domain.Role;
+import com.sds.movieapp.model.member.MemberService;
 import com.sds.movieapp.sns.NaverLogin;
 import com.sds.movieapp.sns.NaverOAuthToken;
 
@@ -31,6 +35,10 @@ public class MemberController {
 	@Autowired
 	private NaverLogin naverLogin;
 	
+	@Autowired
+	private MemberService memberService;
+	
+	
 	//로그인 폼 요청 처리 
 	@GetMapping("/member/loginform")
 	public String getLoginForm() {
@@ -43,6 +51,19 @@ public class MemberController {
 	public String getJoinForm() {
 		
 		return "member/join";
+	}
+	
+	//홈페이지 회원가입 요청 처리 
+	@PostMapping("/member/join")
+	public String join(Member member) {
+		//일반유저가 홈페이지 가입 시엔 USER 권한을 부여하자 
+		Role role = new Role();
+		role.setRole_name("USER");
+		member.setRole(role);
+		
+		memberService.regist(member);//3단계: 일 시키기 (가입)
+		
+		return null;
 	}
 	
 	//네이버 서버에서 들어온 콜백 요청처리
