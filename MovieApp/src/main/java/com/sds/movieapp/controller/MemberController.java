@@ -38,6 +38,13 @@ public class MemberController {
 		return "member/login";
 	}
 	
+	//회원가입 폼 요청 처리 
+	@GetMapping("/member/joinform")
+	public String getJoinForm() {
+		
+		return "member/join";
+	}
+	
 	//네이버 서버에서 들어온 콜백 요청처리
 	//결과 처리 후, 로그인 요청한 사용자가 보게될 화면을 보여줘야 하므로, return  값은 html이 되어야 한다..
 	//따라서 ModelAndView or String 와야 함

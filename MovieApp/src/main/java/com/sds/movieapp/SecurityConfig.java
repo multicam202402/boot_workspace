@@ -23,8 +23,10 @@ public class SecurityConfig {
 		httpSecurity
 			.authorizeHttpRequests(
 					(auth) -> auth
-					.requestMatchers("/site/**","/", "/member/loginform", "/member/login").permitAll() 
+					.requestMatchers("/site/**","/").permitAll() 
+					.requestMatchers("/member/loginform", "/member/login","/member/joinform").permitAll() 
 					.requestMatchers("/cs/notice/list").hasRole("USER") //권한명은 개발자가 회원가입 시 지정하면 됨..
+					.anyRequest().authenticated()
 			);
 	
 		httpSecurity
