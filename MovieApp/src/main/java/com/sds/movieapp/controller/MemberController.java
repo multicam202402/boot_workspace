@@ -1,5 +1,7 @@
 package com.sds.movieapp.controller;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,8 +14,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.movieapp.sns.NaverLogin;
+import com.sds.movieapp.sns.NaverOAuthToken;
 
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class MemberController {
 	
@@ -64,7 +74,54 @@ public class MemberController {
 		 *응답정보에 들어있는 데이터 중 토큰 꺼내기 
 		 *--------------------------------*/
 		String body = responseEntity.getBody();
-		System.out.println("네이버가 보낸 인증 완료 정보는 "+body);
+		log.info("네이버가 보낸 인증 완료 정보는 "+body);
+		
+		//String 에 불과한 자료에서 토큰을 접근하려면 JSON 을 파싱해야 한다..(json simple...구글)
+		//jackson lib 에서 지원하는 ObjectMapper도 있다 
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		NaverOAuthToken oAuthToken=null;
+		
+		try {
+			oAuthToken = objectMapper.readValue(body, NaverOAuthToken.class);//json 파싱 후 자바 객체에 담는다
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		/*--------------------------------
+		 *토큰 정보를 이용하여 네이버 회원 정보 가져오기  
+		 *--------------------------------*/
+		String userinfo_url = naverLogin.getUserinfo_url();
+		
+		//Get 방식을 적용한 헤더 구성 
+		HttpHeaders headers2 = new HttpHeaders();
+		headers2.add("Authorization", "Bearer "+oAuthToken.getAccess_token());
+		HttpEntity entity2 =new HttpEntity(headers2); //HTTP 머리와 몸을 하나의 단위로 묶어주는 객체
+		
+		//비동기 객체를 이용한 요청 (주의 : 프론트앤드 측의 Ajax 기술아님!!) 
+		RestTemplate restTemplate2 = new RestTemplate();
+		ResponseEntity<String> userEntity=restTemplate2.exchange(userinfo_url , HttpMethod.GET , entity2 , String.class);//비동기요청
+		
+		String userBody = userEntity.getBody();
+		log.info(userBody);
+		
+		//사용자 정보 추출하기 
+		ObjectMapper objectMapper2 = new ObjectMapper();
+		
+		//준비된 DTO가 없을 경우, HashMap 꺼내자 
+		HashMap<String, Object> userMap = new HashMap<String, Object>();
+		
+		try {
+			objectMapper2.readValue(userBody, HashMap.class); //두번째 인수는 인스턴스가 아닌 동적 클래스
+																							//이므로, HashMap.class가 와야함
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return null;
 	}
