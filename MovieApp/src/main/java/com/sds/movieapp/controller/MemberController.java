@@ -48,6 +48,13 @@ public class MemberController {
 		return "member/login";
 	}
 	
+	//로그인 요청 처리 (스프링 부트의 시큐리티가 로그인 검증을 알아서 하므로, 로그인 성공시 보여질 페이지만 명시하자)
+	@PostMapping("/member/login")
+	public String login(Member member) {
+		
+		return "redirect:/"; //로그인 성공 시 메인을 재 요청하기
+	}
+	
 	//회원가입 폼 요청 처리 
 	@GetMapping("/member/joinform")
 	public String getJoinForm() {

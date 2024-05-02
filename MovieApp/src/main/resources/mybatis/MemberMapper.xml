@@ -12,5 +12,29 @@
 		</selectKey>
 	</insert>
 	
+	<!-- 홈페이지 회원의 경우, 비밀번호가 존재하고, 비밀번호는 member_detail 테이블에 존재하므로, join 을 해야한다..
+	하지만 mybatis 객체 간 관계를 이용하면 association -->
+	<resultMap type="Member" id="MemberMap">
+		<id 			column="member_idx" 	property="member_idx"/>
+		<result 		column="uid" 				property="uid"/>
+		<result 		column="nickname" 		property="nickname"/>
+		<result 		column="email" 				property="email"/>
+		
+		<association column="sns_idx" property="sns" javaType="Sns" select="com.sds.movieapp.model.member.SnsDAO.select"/>
+		<association column="role_idx" property="role" javaType="Role" select="com.sds.movieapp.model.member.RoleDAO.select"/>
+		<association column="member_idx" property="memberDetail" javaType="MemberDetail" select="com.sds.movieapp.model.member.MemberDetailDAO.selectByMemberIdx"/>
+		
+	</resultMap>
+	
+	<!-- uid를 이용한 회원조회 -->
+	<select id="selectByUid" parameterType="String" resultMap="MemberMap">
+		select member_idx, uid, nickname, email, sns_idx, role_idx
+		from member where uid=#{uid}
+	</select>	
 	
 </mapper>
+
+
+
+
+
