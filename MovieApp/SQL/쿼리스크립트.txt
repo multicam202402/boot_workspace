@@ -16,6 +16,9 @@ insert into role(role_name) values('ADMIN');
 insert into role(role_name) values('USER');
 insert into role(role_name) values('GUEST');
 
+drop table member_detail;
+drop table member;
+
 create table member(
    	  member_idx int primary key auto_increment  
 	, uid varchar(43)

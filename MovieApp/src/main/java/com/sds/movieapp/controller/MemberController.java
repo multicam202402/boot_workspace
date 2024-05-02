@@ -130,7 +130,8 @@ public class MemberController {
 		String email =(String)response.get("email");
 		String name =(String)response.get("name");
 		
-		//중복된 회원이 없다면, 가입을 시킨다...
+		//중복된 회원이 없다면, 가입을 시킨다...(즉 최초 한번은 가입을 회원 정보를 보관해놓자..)
+		
 		
 		//세션을 할당하여, 메인으로 보낸다..
 		
