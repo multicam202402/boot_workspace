@@ -1,6 +1,7 @@
 package com.sds.movieapp.model.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,8 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDetailDAO memberDetailDAO;
 	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Transactional
 	public void regist(Member member) throws MemberException{
@@ -45,6 +48,10 @@ public class MemberServiceImpl implements MemberService{
 		//회원 상세 정보 등록 
 		MemberDetail memberDetail = member.getMemberDetail();
 		memberDetail.setMember(member);
+		memberDetail.setPassword(bCryptPasswordEncoder.encode(memberDetail.getPassword())); 
+		
+		//비밀번호 암호화 처리 
+		
 		
 		result = memberDetailDAO.insert(memberDetail);//회원 상세 정보 등록
 		if(result <1) {
