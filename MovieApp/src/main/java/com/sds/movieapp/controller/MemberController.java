@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
@@ -21,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sds.movieapp.domain.Member;
 import com.sds.movieapp.domain.Role;
+import com.sds.movieapp.exception.MemberException;
 import com.sds.movieapp.model.member.MemberService;
 import com.sds.movieapp.sns.NaverLogin;
 import com.sds.movieapp.sns.NaverOAuthToken;
@@ -56,6 +58,12 @@ public class MemberController {
 	//홈페이지 회원가입 요청 처리 
 	@PostMapping("/member/join")
 	public String join(Member member) {
+		
+		log.info("member uid "+member.getUid());
+		log.info("member uid "+member.getEmail());
+		log.info("member uid "+member.getNickname());
+		log.info("member uid "+member.getSns().getSns_name());
+		
 		//일반유저가 홈페이지 가입 시엔 USER 권한을 부여하자 
 		Role role = new Role();
 		role.setRole_name("USER");
@@ -163,10 +171,22 @@ public class MemberController {
 		
 		//세션을 할당하여, 메인으로 보낸다..
 		
-		
 		return null;
 	}
+	
+	
+	@ExceptionHandler(MemberException.class)
+	public ModelAndView handle(MemberException e) {
+		
+		ModelAndView mav = new ModelAndView("error/result");
+		mav.addObject("e", e);
+		
+		return mav;
+	}
+	
 }
+
+
 
 
 

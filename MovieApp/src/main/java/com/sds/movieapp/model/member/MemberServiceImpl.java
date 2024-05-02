@@ -27,7 +27,7 @@ public class MemberServiceImpl implements MemberService{
 	
 	
 	@Transactional
-	public void regist(Member member) {
+	public void regist(Member member) throws MemberException{
 		//홈페이지 회원의 sns 정보 가져오기
 		Sns sns = snsDAO.selectByName(member.getSns().getSns_name());
 		member.setSns(sns);//sns_idx가 채워진 DTO를 다시 Member DTO  에 대입

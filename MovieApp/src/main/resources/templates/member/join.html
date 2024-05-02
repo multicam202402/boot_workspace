@@ -43,7 +43,7 @@
                 <div class="col-lg-6">
                     <div class="login__form">
                         <h3>Sign Up</h3>
-                        <form action="#">
+                        <form id="form1">
 							<input type="hidden" name="sns.sns_name" value="homepage">
                             <div class="input__item">
                                 <input type="text" name="uid" placeholder="Your ID">
@@ -66,9 +66,9 @@
                             </div>
                             
                             
-                            <button type="submit" class="site-btn">Login Now</button>
+                            <button type="button" class="site-btn" id="bt_regist">Regist Now</button>
                         </form>
-                        <h5>Already have an account? <a href="#">Log In!</a></h5>
+                        <h5>Already have an account? <a href="/member/loginform">Log In!</a></h5>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -118,10 +118,29 @@
 				//console.log(result);
 				
 			}
-		});
-		
+		});		
 	}	
+	
+	//회원가입 요청하기
+	function regist(){
+		$("#form1").attr({
+			action:"/member/join",
+			method:"post"
+		});
+		$("#form1").submit();
+	}
+	
+	$(function(){
+		$("#bt_regist").click(function(){
+			regist();
+		});		
+	});
 </script>
+
+
+
+
+
 
 
 
