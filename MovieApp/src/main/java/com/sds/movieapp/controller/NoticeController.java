@@ -15,6 +15,9 @@ import com.sds.movieapp.domain.Notice;
 import com.sds.movieapp.exception.NoticeException;
 import com.sds.movieapp.model.cs.notice.NoticeService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class NoticeController {
 	
@@ -47,9 +50,13 @@ public class NoticeController {
 	
 	//글 한건 요청 처리 
 	@GetMapping("/cs/notice/detail")
-	public String getDetail() {
+	public String getDetail(Notice notice, Model model) {
+		log.info("선택한 글의 id는 "+notice.getId());
 		
-		return null;
+		noticeService.select(notice);
+		model.addAttribute("notice", notice);
+		
+		return "cs/notice/content";
 	}
 	
 	@ExceptionHandler(NoticeException.class)

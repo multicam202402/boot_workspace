@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.sds.movieapp.domain.Notice;
@@ -30,6 +32,15 @@ public class MongoNoticeDAO implements NoticeDAO{
 	}
 
 	@Override
+	public Notice select(Notice notice) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("_id").is(notice.getId()));
+		notice = mongoTemplate.findOne(query, Notice.class);
+		
+		return notice;
+	}
+	
+	
 	public void insert(Notice notice) throws NoticeException{
 		Notice dto = mongoTemplate.insert(notice);
 		

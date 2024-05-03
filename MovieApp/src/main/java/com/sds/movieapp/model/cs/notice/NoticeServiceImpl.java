@@ -26,6 +26,11 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
+	public Notice select(Notice notice) {
+		return noticeDAO.select(notice);
+	}
+	
+	@Override
 	public void insert(Notice notice) throws NoticeException{
 		noticeDAO.insert(notice);		
 	}
