@@ -62,12 +62,14 @@
 					            </thead>
 					            <tbody>
 					            
-					                <tr th:each="i : ${#numbers.sequence(1,10)}">
+					                <tr th:each="notice : ${noticeList}">
 					                    <td>183</td>
-					                    <td>John Doe</td>
-					                    <td>11-7-2014</td>
-					                    <td><span class="tag tag-success">Approved</span></td>
-					                    <td>1</td>
+					                    <td>
+					                    	<a th:href="@{/cs/notice/detail(id=${notice.id})}"  th:text="${notice.title}"></a>
+					                    </td>
+					                    <td th:text="${notice.writer}"></td>
+					                    <td th:text="${notice.regdate}"></td>
+					                    <td th:text="${notice.hit}"></td>
 					                </tr>
 					            
 					            </tbody>

@@ -1,10 +1,14 @@
 package com.sds.movieapp.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sds.movieapp.domain.Notice;
@@ -19,7 +23,10 @@ public class NoticeController {
 	
 	//게시물 목록
 	@GetMapping("/cs/notice/list")
-	public String getList() {
+	public String getList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		
+		List noticeList = noticeService.selectAll(null); //3단계: 일 시키기 
+		model.addAttribute("noticeList", noticeList); //4단계: 결과 저장
 		
 		return "cs/notice/list";
 	}
