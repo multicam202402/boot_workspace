@@ -63,7 +63,7 @@
 					            <tbody>
 					            
 					                <tr th:each="notice , i : ${noticeList}">
-					                    <td th:text="${pager.totalRecord - i.index}"></td>
+					                    <td th:text="${pager.num - i.index}"></td>
 					                    <td>
 					                    	<a th:href="@{/cs/notice/detail(id=${notice.id})}"  th:text="${notice.title}"></a>
 					                    </td>
@@ -79,7 +79,7 @@
 					
                     <div class="product__pagination">
 
-                        <a th:each="i : ${#numbers.sequence(pager.firstPage , pager.lastPage)}" href="#" th:text="${i}"></a>                 
+                        <a th:each="i : ${#numbers.sequence(pager.firstPage , pager.lastPage)}" th:href="@{/cs/notice/list(currentPage=${i})}" th:text="${i}"  th:class="${pager.currentPage==i? 'current-page':'' }"></a>                                            
 
                         <a href="#"><i class="fa fa-angle-double-right"></i></a>
                     </div>

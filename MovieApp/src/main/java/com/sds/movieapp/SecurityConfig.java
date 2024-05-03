@@ -36,6 +36,9 @@ public class SecurityConfig {
 					//.requestMatchers("/cs/notice/list").hasRole("USER") //권한명은 개발자가 회원가입 시 지정하면 됨..
 					//.requestMatchers("/cs/notice/**").hasAuthority("USER")
 					.requestMatchers("/cs/notice/**").permitAll()
+					.requestMatchers("/rest/member/authform/**").permitAll()
+					.requestMatchers("/member/sns/naver/callback").permitAll()
+					.requestMatchers("/member/sns/kakao/callback").permitAll()
 					.anyRequest().authenticated()
 			);
 	
