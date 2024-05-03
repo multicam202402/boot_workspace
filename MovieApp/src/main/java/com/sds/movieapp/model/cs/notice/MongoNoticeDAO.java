@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.mongodb.client.result.DeleteResult;
 import com.sds.movieapp.domain.Notice;
 import com.sds.movieapp.exception.NoticeException;
 
@@ -35,9 +36,9 @@ public class MongoNoticeDAO implements NoticeDAO{
 	public Notice select(Notice notice) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("_id").is(notice.getId()));
-		notice = mongoTemplate.findOne(query, Notice.class);
+		Notice dto = mongoTemplate.findOne(query, Notice.class);
 		
-		return notice;
+		return dto;
 	}
 	
 	
@@ -52,15 +53,24 @@ public class MongoNoticeDAO implements NoticeDAO{
 	}
 
 	@Override
-	public void update(Notice notice) {
-		// TODO Auto-generated method stub
+	public void update(Notice notice) throws NoticeException{
+		Notice dto = mongoTemplate.save(notice);
 		
+		if(dto ==null) {
+			throw new NoticeException("글 수정 실패");
+		}
 	}
 
 	@Override
-	public void delete(Notice notice) {
-		// TODO Auto-generated method stub
+	public void delete(Notice notice) throws NoticeException{
+		Query query = new Query();
+		query.addCriteria(Criteria.where("_id").is(notice.getId()));
 		
+		DeleteResult result = mongoTemplate.remove(query, Notice.class);
+		
+		if(result.getDeletedCount() < 1) {
+			throw new NoticeException("글 삭제 실패");
+		}
 	}
 	
 }

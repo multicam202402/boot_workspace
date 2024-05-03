@@ -53,10 +53,27 @@ public class NoticeController {
 	public String getDetail(Notice notice, Model model) {
 		log.info("선택한 글의 id는 "+notice.getId());
 		
-		noticeService.select(notice);
-		model.addAttribute("notice", notice);
+		Notice dto = noticeService.select(notice);
+		model.addAttribute("notice", dto);
 		
 		return "cs/notice/content";
+	}
+	
+	//글 한건 수정 요청 처리 
+	@PostMapping("/cs/notice/edit")
+	public String edit(Notice notice) {
+		
+		noticeService.update(notice);
+		
+		return "redirect:/cs/notice/detail?id="+notice.getId();
+	}
+	
+	@PostMapping("/cs/notice/del")
+	public String del(Notice notice) {
+		
+		noticeService.delete(notice);
+		
+		return "redirect:/cs/notice/list";
 	}
 	
 	@ExceptionHandler(NoticeException.class)

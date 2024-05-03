@@ -50,6 +50,7 @@
 					    </div>
 					
 					    <form id="form1" class="form-horizontal">
+					    	<input type="hidden" name="id" th:value="${notice.id}">
 					        <div class="card-body">
 					            <div class="form-group row">
 					                <label for="title" class="col-sm-2 col-form-label">제목</label>
@@ -74,7 +75,8 @@
 					        </div>
 					
 					        <div class="card-footer">
-					            <button type="button" class="btn btn-info" id="bt_regist">글등록</button>
+					            <button type="button" class="btn btn-info" id="bt_edit">수정</button>
+					            <button type="button" class="btn btn-info" id="bt_del">삭제</button>
 					            <button type="button" class="btn btn-info float-right" id="bt_list">목록보기</button>
 					        </div>
 					
@@ -105,18 +107,34 @@
 </body>
 </html>
 <script type="text/javascript">
-	function regist(){
+	function edit(){
 		$("#form1").attr({
-			action:"/cs/notice/regist",
+			action:"/cs/notice/edit",
 			method:"post"
 		});
 		$("#form1").submit();
 	}
 	
+	function del(){
+		$("#form1").attr({
+			action:"/cs/notice/del",
+			method:"post"
+		});
+		$("#form1").submit();
+	}
+	
+	
 	$(function(){
-		$("#bt_regist").click(function(){
-			regist();			
+		$("#bt_edit").click(function(){
+			edit();			
+		});
+		
+		$("#bt_del").click(function(){
+			if(confirm("삭제하시겠어요?")){
+				del();			
+			}
 		});		
+		
 	});
 </script>
 
