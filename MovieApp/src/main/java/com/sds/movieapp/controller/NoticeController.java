@@ -45,6 +45,13 @@ public class NoticeController {
 		return "redirect:/cs/notice/list";
 	}
 	
+	//글 한건 요청 처리 
+	@GetMapping("/cs/notice/detail")
+	public String getDetail() {
+		
+		return null;
+	}
+	
 	@ExceptionHandler(NoticeException.class)
 	public ModelAndView handle(NoticeException e) {
 		ModelAndView mav = new ModelAndView("error/result");
