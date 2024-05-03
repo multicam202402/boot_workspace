@@ -18,7 +18,7 @@ public class MongoConfig {
 
 	@Bean
 	public MongoClient  mongoClient() {
-		return MongoClients.create("mongodb://movie:1234@localhost:27017");//접속 문자열 넣기
+		return MongoClients.create("mongodb://test:1234@localhost:27017");//접속 문자열 넣기
 	}
 	
 	@Bean
@@ -26,7 +26,6 @@ public class MongoConfig {
 		return new MongoTemplate(mongoClient(), "movie");
 	}
 }
-
 
 
 
