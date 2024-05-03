@@ -23,8 +23,10 @@ public class MongoNoticeDAO implements NoticeDAO{
 	private MongoTemplate mongoTemplate; //xml 이 아닌 @Configuration 에 의해 등록됨
 
 	public int selectCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		Query query = new Query();
+		
+		long total = mongoTemplate.count(query, Notice.class);
+		return (int)total;
 	}
 
 	@Override

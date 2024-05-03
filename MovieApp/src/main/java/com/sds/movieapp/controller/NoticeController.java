@@ -1,5 +1,6 @@
 package com.sds.movieapp.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sds.movieapp.common.Pager;
 import com.sds.movieapp.domain.Notice;
 import com.sds.movieapp.exception.NoticeException;
 import com.sds.movieapp.model.cs.notice.NoticeService;
@@ -24,12 +26,23 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 	
+	@Autowired
+	private Pager pager;
+	
+	
 	//게시물 목록
 	@GetMapping("/cs/notice/list")
 	public String getList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
 		
-		List noticeList = noticeService.selectAll(null); //3단계: 일 시키기 
+		pager.init(noticeService.selectCount(), currentPage);
+		
+		HashMap map=new HashMap();
+		map.put("startIndex", pager.getStartIndex());
+		map.put("rowCount", pager.getPageSize());
+		
+		List noticeList = noticeService.selectAll(map); //3단계: 일 시키기 
 		model.addAttribute("noticeList", noticeList); //4단계: 결과 저장
+		model.addAttribute("pager", pager); //4단계: 결과 저장
 		
 		return "cs/notice/list";
 	}
