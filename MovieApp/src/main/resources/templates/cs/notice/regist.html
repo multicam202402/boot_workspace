@@ -42,47 +42,44 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
+                
                 	<!-- 테이블 시작 -->
-					<div class="card">
+					<div class="card card-info">
 					    <div class="card-header">
-					        <h3 class="card-title">공지 게시판</h3>
-					        <button class="btn btn-info float-right" id="bt_regist">글등록</button>
+					        <h3 class="card-title">Horizontal Form</h3>
 					    </div>
 					
-					    <div class="card-body table-responsive p-0">
-					        <table class="table table-hover text-nowrap">
-					            <thead>
-					                <tr>
-					                    <th>No</th>
-					                    <th>제목</th>
-					                    <th>작성자</th>
-					                    <th>등록일</th>
-					                    <th>조회수</th>
-					                </tr>
-					            </thead>
-					            <tbody>
+					    <form class="form-horizontal">
+					        <div class="card-body">
+					            <div class="form-group row">
+					                <label for="title" class="col-sm-2 col-form-label">제목</label>
+					                <div class="col-sm-10">
+					                    <input type="text" class="form-control" id="title" placeholder="Your title...">
+					                </div>
+					            </div>
 					            
-					                <tr th:each="i : ${#numbers.sequence(1,10)}">
-					                    <td>183</td>
-					                    <td>John Doe</td>
-					                    <td>11-7-2014</td>
-					                    <td><span class="tag tag-success">Approved</span></td>
-					                    <td>1</td>
-					                </tr>
+					            <div class="form-group row">
+					                <label for="writer" class="col-sm-2 col-form-label">작성자</label>
+					                <div class="col-sm-10">
+					                    <input type="text" class="form-control" id="writer" placeholder="Your id...">
+					                </div>
+					            </div>
 					            
-					            </tbody>
-					        </table>
-					    </div>
-					</div>
-                    <div class="product__pagination">
-                        <a href="#" class="current-page">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#"><i class="fa fa-angle-double-right"></i></a>
-                    </div>
-                	
+					            <div class="form-group row">
+					                <label for="content" class="col-sm-2 col-form-label">내용</label>
+					                <div class="col-sm-10">
+					                    <textarea class="form-control" id="content" placeholder="Your contents..."></textarea>
+					                </div>
+					            </div>
+					        </div>
+					
+					        <div class="card-footer">
+					            <button type="button" class="btn btn-info">글등록</button>
+					            <button type="button" class="btn btn-info float-right">목록보기</button>
+					        </div>
+					
+					    </form>
+					</div>                	
                 	<!-- 테이블 끝 -->
                 </div>
             </div>       
