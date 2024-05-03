@@ -31,7 +31,12 @@ public class MongoNoticeDAO implements NoticeDAO{
 
 	@Override
 	public List selectAll(Map map) {
-		return mongoTemplate.findAll(Notice.class);
+		int startIndex = (int)map.get("startIndex"); //몇번째 index부터~
+		int rowCount =(int)map.get("rowCount"); //몇개?
+		
+		Query query = new Query().skip(startIndex).limit(rowCount);
+		
+		return mongoTemplate.find(query, Notice.class);
 	}
 
 	@Override

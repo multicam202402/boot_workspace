@@ -16,8 +16,7 @@ public class NoticeServiceImpl implements NoticeService{
 	private NoticeDAO noticeDAO;
 	
 	public int selectCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return noticeDAO.selectCount();
 	}
 
 	@Override

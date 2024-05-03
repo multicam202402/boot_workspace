@@ -62,8 +62,8 @@
 					            </thead>
 					            <tbody>
 					            
-					                <tr th:each="notice : ${noticeList}">
-					                    <td>183</td>
+					                <tr th:each="notice , i : ${noticeList}">
+					                    <td th:text="${pager.totalRecord - i.index}"></td>
 					                    <td>
 					                    	<a th:href="@{/cs/notice/detail(id=${notice.id})}"  th:text="${notice.title}"></a>
 					                    </td>
