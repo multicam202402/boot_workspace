@@ -4923,3 +4923,6 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-05-07 08:42:40.086
 !MESSAGE Boot project ADDED: TestApp
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-05-07 11:12:10.998
+!MESSAGE Classpath changed for project: MovieApp
