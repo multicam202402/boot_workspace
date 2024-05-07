@@ -151,18 +151,28 @@ public class MovieApiService {
 			//영화배우 
 			List<Actor> actorList = new ArrayList<Actor>();
 			for(int i=0;i< movieInfoResult.getMovieInfo().getActors().getActor().size();i++) {
+				if(i>2)break;
 				String actorNm=movieInfoResult.getMovieInfo().getActors().getActor().get(i).getPeopleNm();
 				String actorNmEn=movieInfoResult.getMovieInfo().getActors().getActor().get(i).getPeopleNmEn();
 				Actor actor = new Actor(); //empty status
-				actor.setPeopleNm(actorNm); //장르명 넣기
+				actor.setPeopleNm(actorNm);
 				actor.setPeopleNmEn(actorNmEn);
-				actorList.add(actor); //장르 수집
+				actorList.add(actor); 
 			}
-			movie.setActors(actorList); //DTO 에 장르 목록 추가
+			movie.setActors(actorList); //DTO 에 배우 목록 추가
 			
 			
 			//제작 국가
-			
+			List<Nation> nationList = new ArrayList<Nation>();
+			for(int i=0;i< movieInfoResult.getMovieInfo().getNations().getNation().size();i++) {
+				String nationNm=movieInfoResult.getMovieInfo().getNations().getNation().get(i).getNationNm();
+				
+				Nation nation = new Nation(); //empty status
+				nation.setNationNm(nationNm); 
+				nationList.add(nation); 
+			}
+			movie.setNations(nationList); //DTO에 국가 목록 추가
+
 			
 			List<Director> directorList=new ArrayList<Director>();//감독을 채워넣을 List
 			for(int i=0;i<movieInfoResult.getMovieInfo().getDirectors().getDirector().size();i++) {

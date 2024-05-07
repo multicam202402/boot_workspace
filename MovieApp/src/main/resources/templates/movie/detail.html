@@ -120,10 +120,10 @@
                             	<input type="hidden" th:each="director, i  :${movie.directors}" th:name="|directors[${i.index}]|" th:value="${director.peopleNm}">
                             	
                             	<!-- 배우명 -->
-                            	<input type="hidden">
+                            	<input type="hidden" th:each="actor, i  :${movie.actors}" th:name="|actors[${i.index}]|" th:value="${actor.peopleNm}">
                             	
                             	<!-- 제작 국가 -->
-                            	<input type="hidden">
+                            	<input type="hidden" th:each="nation, i  :${movie.nations}" th:name="|nations[${i.index}]|" th:value="${nation.nationNm}">
                             	
                                 <textarea placeholder="Your Comment" name="content"></textarea>
                                 <button type="button" class="float-right" id="bt_regist"><i class="fa fa-location-arrow"></i> Review</button>
