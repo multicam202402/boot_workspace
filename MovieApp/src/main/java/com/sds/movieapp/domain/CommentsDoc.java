@@ -1,4 +1,4 @@
-package com.sds.movieapp.document;
+package com.sds.movieapp.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Document(collection="comments")
-public class Comments {
+public class CommentsDoc {
 	
 	@Id
 	private String id;

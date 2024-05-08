@@ -43,3 +43,13 @@ create table member_detail(
 
 
 
+use admin;
+
+db.createUser({
+  user: "test",
+  pwd: "1234",
+  roles: [
+    { role: "readWrite", db: "movie" }
+  ]
+});
+
