@@ -49,7 +49,6 @@
     <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
     <fullyQualifiedTypeName name="jakarta.servlet.http.HttpServletRequest"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
-    <fullyQualifiedTypeName name="lombok.extern.slf4j.Slf4j"/>
     <fullyQualifiedTypeName name="org.aspectj.lang.ProceedingJoinPoint"/>
     <fullyQualifiedTypeName name="jakarta.servlet.http.HttpSession"/>
     <fullyQualifiedTypeName name="org.aspectj.lang.annotation.Around"/>
@@ -59,4 +58,5 @@
     <fullyQualifiedTypeName name="com.sds.movieapp.document.Member"/>
     <fullyQualifiedTypeName name="com.sds.movieapp.document.Movie"/>
     <fullyQualifiedTypeName name="com.sds.movieapp.document.Comments"/>
+    <fullyQualifiedTypeName name="lombok.extern.slf4j.Slf4j"/>
 </qualifiedTypeNameHistroy>
