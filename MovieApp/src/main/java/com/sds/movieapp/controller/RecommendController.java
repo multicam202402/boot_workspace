@@ -14,6 +14,8 @@ public class RecommendController {
 	@GetMapping("/movie/recommend/list")
 	public String getList() {
 		
+		//3단계 : 추천영화 목록 가져오기 
+		
 		return "recommend/list";
 	}
 }

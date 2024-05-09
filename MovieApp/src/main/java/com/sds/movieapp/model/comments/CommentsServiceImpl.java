@@ -56,6 +56,9 @@ public class CommentsServiceImpl implements CommentsService{
 			}
 		}
 		log.debug("당신이 입력한 영화평 내용을 분석한 결과 "+score);
+		
+		commentsDoc.setScore(score); //몽고db에 insert 하기 전에, 점수 반영
+		
 		commentsDocDAO.insert(commentsDoc); //누가 member_idx, 어떤내용? content, 어떤 영화를? movie_idx
 	}
 
