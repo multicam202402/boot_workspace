@@ -14,6 +14,8 @@ import com.sds.movieapp.model.comments.CommentsService;
 
 import lombok.extern.slf4j.Slf4j;
 
+
+//영화평 요청을 처리하는 하위 컨트롤러
 @Slf4j
 @RestController
 public class RestCommentsController {
@@ -21,37 +23,52 @@ public class RestCommentsController {
 	@Autowired
 	private CommentsService commentsService;
 	
-	// 영화평 등록 요청을 처리
+	//영화평 등록 요청을 처리 
 	@PostMapping("/movie/comments")
-	public ResponseEntity registComments(CommentsDoc commentsDoc, MovieDoc movie) {
+	public ResponseEntity regist( CommentsDoc commentsDoc, MovieDoc movieDoc) {
 		
-		log.debug("댓글 단 사람은" + commentsDoc.getMember_idx());
-
-		log.debug("영화제목은 "+movie.getMovieNm());
+		log.debug("호출여부 ");
 		
-		for (int i = 0; i < movie.getGenres().length; i++) {
-			log.debug("장르는 " + movie.getGenres()[i]);
+		//영화평 작성자? 
+		log.debug("member_idx = "+commentsDoc.getMember_idx());
+		
+		//장르
+		for(int i=0;i<movieDoc.getGenres().length;i++) {
+			log.debug("장르명 "+movieDoc.getGenres()[i]);
 		}
-		for (int i = 0; i < movie.getDirectors().length; i++) {
-			log.debug(" 감독은 " + movie.getDirectors()[i]);
+		
+		//영화명
+		log.debug("영화명 "+movieDoc.getMovieNm());
+		
+		//감독
+		for(int i=0;i<movieDoc.getDirectors().length;i++) {
+			log.debug("감독명 "+movieDoc.getDirectors()[i]);
 		}
-		for (int i = 0; i < movie.getActors().length; i++) {
-			log.debug("배우명은 " + movie.getActors()[i]);
+		
+		//배우
+		for(int i=0;i<movieDoc.getActors().length;i++) {
+			log.debug("배우명 "+movieDoc.getActors()[i]);
+		}
+		
+		//제작 국가정보 
+		for(int i=0;i<movieDoc.getNations().length;i++) {
+			log.debug("국가명 "+movieDoc.getNations()[i]);
 		}
 
-		log.debug("영화평은 " + commentsDoc.getContent());
-
-		commentsService.registComments(commentsDoc, movie);
-
-		ResponseEntity entity = ResponseEntity.ok("몽고DB 등록 성공");
-
+		//영화평
+		log.debug("영화평 "+commentsDoc.getContent());
+		
+		//3단계: 일 시키기 
+		commentsService.registComments(commentsDoc, movieDoc);
+		
+		ResponseEntity entity = ResponseEntity.ok("몽고DB에 입력 성공");
+		
 		return entity;
 	}
-
+	
 	@ExceptionHandler(CommentsException.class)
 	public ResponseEntity handle(CommentsException e) {
 		ResponseEntity entity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		return entity;
 	}
-
 }
