@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.model.PreferenceArray;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sds.movieapp.domain.CommentsDoc;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class RecommendServiceImpl implements RecommendService{
 
+	@Autowired
 	private CommentsDocDAO commentsDocDAO;
 	
 	public List getList(int member_idx) {
