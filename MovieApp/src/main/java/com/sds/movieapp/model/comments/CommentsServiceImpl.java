@@ -20,14 +20,16 @@ public class CommentsServiceImpl implements CommentsService{
 	private Komoran komoran;
 	
 	public void registComments(CommentsDoc commentsDoc, MovieDoc movieDoc) {
+		String text = commentsDoc.getContent().replaceAll("[^a-zA-Z0-9가-힣\\s]", "");
 		
 		//코모란 에게 영화평을 형태소 단위로 나누도록 시키자
-		KomoranResult result = komoran.analyze(commentsDoc.getContent());
+		KomoranResult result = komoran.analyze(text);
 		
 		List< Pair<String, String> > resultList = result.getList();
 		for( Pair<String, String> pair : resultList) {
 			log.debug(pair.getFirst()+", "+pair.getSecond());
 		}
+		//아주  재미있게 보았다
 	}
 
 }
