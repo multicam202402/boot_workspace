@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.sds.movieapp.domain.CommentsDoc;
@@ -25,8 +27,9 @@ public class CommentsDocDAOImpl implements CommentsDocDAO{
 
 	@Override
 	public List selectAllByMemember(int member_idx) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = new Query();
+		query.addCriteria(Criteria.where("member_idx").is(member_idx));
+		return mongoTemplate.find(query, CommentsDoc.class);
 	}
 
 	@Override
