@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.mahout.cf.taste.impl.model.GenericPreference;
 import org.apache.mahout.cf.taste.model.Preference;
@@ -53,6 +54,12 @@ public class RecommendServiceImpl implements RecommendService{
 		/*-----------------------------------------
 		 영화평 리스트에서, 긍정 평가한 리스트 추려내기
 		-----------------------------------------*/
+		List<MovieDoc> likedMovies =preferences.stream()
+			.filter(p -> p.getValue() >=2 )  //추려내는게 목적인 메서드 따라서 filter  수행 후 리스트는 줄어들 수 있다.
+			.map(p -> metadataMap.get(p.getItemID()))
+			.collect(Collectors.toList()); //최종 메서드
+	
+		
 	
 		
 
