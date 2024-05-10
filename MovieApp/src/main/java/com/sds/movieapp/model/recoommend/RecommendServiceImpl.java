@@ -76,16 +76,27 @@ public class RecommendServiceImpl implements RecommendService{
 		Map<Long, MovieDoc> candiMap = new HashMap();//리스트를 맵으로 전환 목적
 		movieList.stream().forEach(m-> candiMap.put((long)m.getMovie_idx(), m)); //맵에 옮겨 담기 완료
 		
+		//모든 영화에 대한 계산 결과를 담아놓을 Map  -  영화idx - 23점
+		Map<Long, Double> calculatedMap = new HashMap();
+		
 		for(MovieDoc movieDoc : likedMovies) { //긍정 평가한 영화들만큼...
 			for(Map.Entry<Long, MovieDoc> entry : candiMap.entrySet()) { //홈페이지의 모든 영화들만큼...
 				//유사도 측정.. 상위 n개만 최종적으로 추려냄...
 				//감독,배우, 국가, 장르..
-				double score = calculate(영화1, 영화2)//유사도 메서드 호출()
+				MovieDoc candi = entry.getValue();
 				
+				double score = calculate(movieDoc, candi);//유사도 메서드 호출()
+				calculatedMap.put(entry.getKey() , calculatedMap.getOrDefault(entry.getKey(), 0.0)+ score);
 			}
 		}
 		
-
+		log.debug("계산 결과 사이즈 "+calculatedMap.size());
+		
+		for( Map.Entry<Long, Double> entry : calculatedMap.entrySet()) {
+			MovieDoc movieDoc = candiMap.get(entry.getKey());
+			log.debug(movieDoc.getMovieNm()+" 의 유사도는 "+entry.getValue());			
+		}
+		 
 		return null;
 	}
 	
