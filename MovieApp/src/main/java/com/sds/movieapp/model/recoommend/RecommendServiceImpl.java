@@ -54,11 +54,15 @@ public class RecommendServiceImpl implements RecommendService{
 		/*-----------------------------------------
 		 영화평 리스트에서, 긍정 평가한 리스트 추려내기
 		-----------------------------------------*/
+		preferences.stream().forEach(m -> log.debug("긍정평가 전 영화명 "+metadataMap.get(m.getItemID())));
+		
 		List<MovieDoc> likedMovies =preferences.stream()
-			.filter(p -> p.getValue() >=2 )  //추려내는게 목적인 메서드 따라서 filter  수행 후 리스트는 줄어들 수 있다.
+			.filter(p -> p.getValue() >=2.0 )  //추려내는게 목적인 메서드 따라서 filter  수행 후 리스트는 줄어들 수 있다.
 			.map(p -> metadataMap.get(p.getItemID()))
 			.collect(Collectors.toList()); //최종 메서드
-	
+		
+		//긍정 평가 리스트 출력 테스트
+		likedMovies.stream().forEach(m -> log.debug("긍정 평가한 영화명은 "+m.getMovieNm()));
 		
 	
 		
