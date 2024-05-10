@@ -23,10 +23,19 @@ public class MovieDocDAOImpl implements MovieDocDAO{
 		return 0;
 	}
 
-	@Override
-	public List selectAll(Map map) {
-		// TODO Auto-generated method stub
-		return null;
+	//몽고DB에 존재하는 모든 영화가져오기 
+	public List selectAll(Map map) {  //selectAll(null) 페이징 처리 안하기 위해..
+		List list  = null;
+		
+		if(map==null) { //페이징 처리 무시하고 가져오기
+			list = mongoTemplate.findAll(MovieDoc.class);
+		}else {//페이징 처리 적용하여 가져오기
+			int startIndex =(int)map.get("startIndex");
+			int rowCount =(int)map.get("rowCount");
+			Query query = new Query().skip(startIndex).limit(rowCount);
+			list = mongoTemplate.find(query, MovieDoc.class);
+		}
+		return list;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.sds.movieapp.model.recoommend;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,8 @@ public class RecommendServiceImpl implements RecommendService{
 	
 	@Autowired
 	private MovieDocDAO movieDocDAO;
+	
+	private double minScore=1.0;
 	
 	public List getList(int member_idx) {
 		
@@ -57,7 +60,7 @@ public class RecommendServiceImpl implements RecommendService{
 		preferences.stream().forEach(m -> log.debug("긍정평가 전 영화명 "+metadataMap.get(m.getItemID())));
 		
 		List<MovieDoc> likedMovies =preferences.stream()
-			.filter(p -> p.getValue() >=2.0 )  //추려내는게 목적인 메서드 따라서 filter  수행 후 리스트는 줄어들 수 있다.
+			.filter(p -> p.getValue() >= minScore )  //추려내는게 목적인 메서드 따라서 filter  수행 후 리스트는 줄어들 수 있다.
 			.map(p -> metadataMap.get(p.getItemID()))
 			.collect(Collectors.toList()); //최종 메서드
 		
@@ -65,11 +68,88 @@ public class RecommendServiceImpl implements RecommendService{
 		likedMovies.stream().forEach(m -> log.debug("긍정 평가한 영화명은 "+m.getMovieNm()));
 		
 	
+		/*-----------------------------------------
+		 홈페이지의 모든 영화(유저가 클릭한 영화들...)와 긍정 평가한 영화와의 유사도를 체크하여 
+		 유사도가 높은 상위 n개를 추천영화로 등록 
+		-----------------------------------------*/
+		List<MovieDoc> movieList = movieDocDAO.selectAll(null);
+		Map<Long, MovieDoc> candiMap = new HashMap();//리스트를 맵으로 전환 목적
+		movieList.stream().forEach(m-> candiMap.put((long)m.getMovie_idx(), m)); //맵에 옮겨 담기 완료
+		
+		for(MovieDoc movieDoc : likedMovies) { //긍정 평가한 영화들만큼...
+			for(Map.Entry<Long, MovieDoc> entry : candiMap.entrySet()) { //홈페이지의 모든 영화들만큼...
+				//유사도 측정.. 상위 n개만 최종적으로 추려냄...
+				//감독,배우, 국가, 장르..
+				double score = calculate(영화1, 영화2)//유사도 메서드 호출()
+				
+			}
+		}
 		
 
 		return null;
 	}
 	
+	//유사도 계산 (넘겨받은 두 영화 사이의 유사도 측정)
+	public double calculate(MovieDoc m1, MovieDoc m2) {
+		double score = 0.0;
+		
+		//감독 유사도 측정
+		String[] directors1 = m1.getDirectors();
+		String[] directors2 = m2.getDirectors();
+		List<String> listDirectors1 = Arrays.asList(directors1); // 배열을 리스트로 자동 전환
+		List<String> listDirectors2 = Arrays.asList(directors2); // 배열을 리스트로 자동 전환
+		
+		for(String director  : listDirectors1) {
+			if(listDirectors2.contains(director)) {
+				score += 0.5; //몇점을 부여할지는 개발자가 알아서 조절
+				break;
+			}
+		}
+		
+		
+		//배우 유사도 측정
+		String[] actors1 = m1.getActors();
+		String[] actors2 = m2.getActors();
+		List<String> listActors1 = Arrays.asList(actors1); // 배열을 리스트로 자동 전환
+		List<String> listActors2 = Arrays.asList(actors2); // 배열을 리스트로 자동 전환
+		
+		for(String actor  : listActors1) {
+			if(listActors2.contains(actor)) {
+				score += 0.5;
+				break;
+			}
+		}
+		
+		
+		//장르 유사도 측정
+		String[] genres1 = m1.getGenres();
+		String[] genres2 = m2.getGenres();
+		List<String> listGenres1 = Arrays.asList(genres1); // 배열을 리스트로 자동 전환
+		List<String> listGenres2 = Arrays.asList(genres2); // 배열을 리스트로 자동 전환
+		
+		for(String genre  : listGenres1) {
+			if(listGenres2.contains(genre)) {
+				score += 0.6;
+				break;
+			}
+		}
+		
+		
+		//국가 유사도 측정
+		String[] nations1 = m1.getNations();
+		String[] nations2 = m2.getNations();
+		List<String> listNations1 = Arrays.asList(nations1); // 배열을 리스트로 자동 전환
+		List<String> listNations2 = Arrays.asList(nations2); // 배열을 리스트로 자동 전환
+		
+		for(String nation  : listNations1) {
+			if(listNations2.contains(nation)) {
+				score += 0.3;
+				break;
+			}
+		}
+		
+		return score;
+	}
 }
 
 
