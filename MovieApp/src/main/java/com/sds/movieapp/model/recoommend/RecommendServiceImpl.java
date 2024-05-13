@@ -115,7 +115,7 @@ public class RecommendServiceImpl implements RecommendService{
 		//List, Set만 stream 을 생성할 수 있고, Map은 불가 따라서  map은 Set으로 변환한 후 Stream생성
 		resultList = calculatedMap.entrySet().stream()
 			.sorted(Map.Entry.<Long, Double>comparingByValue().reversed())
-			.limit(3)
+			.limit(2)
 			.map(e ->  movieApiService.getMovie(movieDAO.select((int)(long)e.getKey())))
 			.collect(Collectors.toList());
 		 
