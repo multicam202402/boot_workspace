@@ -204,6 +204,7 @@ public class MemberController {
 		member.setEmail(email);
 		member.setSns(snsService.selectByName("naver")); 
 		member.setRole(roleService.selectByName("USER"));//일반 회원 가입이므로...
+		
 	
 		//중복된 회원이 없다면, 가입을 시킨다...(즉 최초 한번은 가입을 회원 정보를 보관해놓자..)
 		Member dto = memberService.selectByUid(id);
@@ -214,10 +215,11 @@ public class MemberController {
 		
 		//세션을 할당하여, 메인으로 보낸다..
 		session.setAttribute("member", dto);
+		log.debug("현재 가진 권한은 "+dto.getRole().getRole_name());
 		
 		//스프링 시큐리티의 권한 부여를 강제적으로 처리 
 		//(CustomeUserDetails 로부터 자동으로 값을 할당하는 방식이 아니라, 개발자가 수동으로 시큐리티에게 정보 주입)
-		Authentication auth = new UsernamePasswordAuthenticationToken(member.getNickname(), Collections.singletonList(new SimpleGrantedAuthority("USER")));
+		Authentication auth = new UsernamePasswordAuthenticationToken(member.getNickname(), null, Collections.singletonList(new SimpleGrantedAuthority("USER")));
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
 		
