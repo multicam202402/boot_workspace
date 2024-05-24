@@ -2571,3 +2571,12 @@ END
 
 !ENTRY org.springframework.tooling.boot.ls 1 0 2024-05-24 09:03:55.227
 !MESSAGE Boot project REMOVED: FoodFit
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-05-24 09:38:10.141
+!MESSAGE Classpath changed for project: RecommendApp
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-05-24 09:38:10.143
+!MESSAGE Boot project ADDED: RecommendApp
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-05-24 09:51:32.960
+!MESSAGE Classpath changed for project: RecommendApp
