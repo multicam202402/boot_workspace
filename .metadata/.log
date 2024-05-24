@@ -2565,3 +2565,9 @@ END
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2024-05-24 08:54:05.642
 !MESSAGE Started org.springframework.tooling.boot.ls LS process 8116
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-05-24 09:03:55.224
+!MESSAGE Classpath changed for project: FoodFit
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-05-24 09:03:55.227
+!MESSAGE Boot project REMOVED: FoodFit
