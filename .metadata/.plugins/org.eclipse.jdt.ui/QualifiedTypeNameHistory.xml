@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="com.sds.movieapp.controller.MemberController"/>
-    <fullyQualifiedTypeName name="org.springframework.web.client.RestTemplate"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
-    <fullyQualifiedTypeName name="com.sds.movieapp.domain.CustomUserDetails"/>
     <fullyQualifiedTypeName name="org.springframework.web.context.request.RequestContextHolder"/>
     <fullyQualifiedTypeName name="org.springframework.web.context.request.ServletRequestAttributes"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
@@ -24,7 +20,6 @@
     <fullyQualifiedTypeName name="org.apache.mahout.cf.taste.impl.model.GenericItemPreferenceArray"/>
     <fullyQualifiedTypeName name="com.sds.movieapp.model.recoommend.CustomModel"/>
     <fullyQualifiedTypeName name="org.apache.mahout.cf.taste.impl.model.GenericUserPreferenceArray"/>
-    <fullyQualifiedTypeName name="lombok.extern.slf4j.Slf4j"/>
     <fullyQualifiedTypeName name="org.apache.mahout.cf.taste.impl.model.GenericPreference"/>
     <fullyQualifiedTypeName name="org.springframework.data.mongodb.core.query.Query"/>
     <fullyQualifiedTypeName name="org.springframework.data.mongodb.core.query.Criteria"/>
@@ -39,11 +34,9 @@
     <fullyQualifiedTypeName name="com.sds.movieapp.domain.Member"/>
     <fullyQualifiedTypeName name="jakarta.servlet.http.HttpSession"/>
     <fullyQualifiedTypeName name="org.springframework.security.core.Authentication"/>
-    <fullyQualifiedTypeName name="org.springframework.security.authentication.UsernamePasswordAuthenticationToken"/>
     <fullyQualifiedTypeName name="java.util.Collections"/>
     <fullyQualifiedTypeName name="org.springframework.security.core.authority.SimpleGrantedAuthority"/>
     <fullyQualifiedTypeName name="org.springframework.security.core.context.SecurityContextHolder"/>
-    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="org.springframework.cloud.config.server.EnableConfigServer"/>
     <fullyQualifiedTypeName name="org.springframework.context.annotation.Configuration"/>
     <fullyQualifiedTypeName name="org.springframework.security.config.annotation.web.configuration.EnableWebSecurity"/>
@@ -60,4 +53,11 @@
     <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="java.util.Map"/>
     <fullyQualifiedTypeName name="com.sds.recommendapp.domain.Movie"/>
+    <fullyQualifiedTypeName name="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter"/>
+    <fullyQualifiedTypeName name="com.sds.movieapp.jwt.CustomAuthenticationFilter"/>
+    <fullyQualifiedTypeName name="org.springframework.security.authentication.AuthenticationManager"/>
+    <fullyQualifiedTypeName name="org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration"/>
+    <fullyQualifiedTypeName name="org.springframework.security.authentication.UsernamePasswordAuthenticationToken"/>
+    <fullyQualifiedTypeName name="lombok.extern.slf4j.Slf4j"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 </qualifiedTypeNameHistroy>

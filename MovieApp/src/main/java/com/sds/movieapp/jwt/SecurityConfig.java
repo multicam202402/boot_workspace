@@ -1,4 +1,4 @@
-package com.sds.movieapp;
+package com.sds.movieapp.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -7,10 +7,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.sds.movieapp.jwt.CustomAuthenticationFilter;
 
 //스프링 3.0 부터 스프링빈 xml 파일을 대신하여 어노테이션 기반으로 설정할 수 있도록 지원..
 /*
@@ -23,7 +22,7 @@ public class SecurityConfig {
 	
 	//스프링이 지원하는 단방향 암호화(해시) 객체 등록
 	@Bean 
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
@@ -72,6 +71,7 @@ public class SecurityConfig {
 		CustomAuthenticationFilter customFilter = new CustomAuthenticationFilter(authenticationManager());
 		customFilter.setFilterProcessesUrl("/member/login");
 		httpSecurity.addFilterAt(customFilter, UsernamePasswordAuthenticationFilter.class);
+		
 		
 		//로그인에 대한 설정
 		//httpSecurity

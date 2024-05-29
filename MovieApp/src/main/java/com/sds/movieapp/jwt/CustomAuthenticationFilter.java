@@ -2,10 +2,11 @@ package com.sds.movieapp.jwt;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import jakarta.servlet.FilterChain;
@@ -24,11 +25,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 	
 	//AuthenticationManager 는 인터페이스이고, 스프링시큐리티 내부적으로 생성되어 처리되므로, 
 	//개발자는 스프링으로부터 얻어와 사용해야 한다..
-	private AuthenticationManager authenticationManager;
 	
+	private AuthenticationManager authenticationManager;
+
 	public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager; 
 	}
+	
+	
 	
 	//사용자가 로그인하려고 할때...
 	@Override
@@ -46,10 +50,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		
 		//유저명과 비밀번호를 UsernamePasswordAthenticationToken 객체에 담아놓고, 
 		//스프링 시큐리티로 하여금, db를 연동하여 회원정보를 인증하는 절차를 시키자!!
+		//CustomerUserDetailsService 객체를 이용하여 db를 조회해주는 객체가 바로 AuthenticationManager 였다..
+		Authentication auth=new UsernamePasswordAuthenticationToken(username, password, null);
 		
-		
-		
-		return null;
+		return authenticationManager.authenticate(auth); // CustomUserDetailsService의 db조회 메서드 호출!!
 	}
 	
 	//스프링 시큐리티가 무조건 username  파라미터를 찾으므로, 만일 개발자가 다른 이름의 파라미터를 이용하고 있다면
@@ -63,13 +67,13 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 	//사용자가 인증 성공되면...
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-
+		log.debug("회원정보가 존재합니다.로그인 성공");
 	}
 	
 	//사용자 인증이 실패되면..
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-
+		log.debug("회원정보가 없습니다.로그인 실패");
 	}
 	
 }
