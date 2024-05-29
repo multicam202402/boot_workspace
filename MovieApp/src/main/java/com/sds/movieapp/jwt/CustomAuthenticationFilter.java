@@ -1,13 +1,18 @@
 package com.sds.movieapp.jwt;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sds.movieapp.domain.CustomUserDetails;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -32,6 +37,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		this.authenticationManager = authenticationManager; 
 	}
 	
+	@Autowired
+	private JwtUtil jwtUtil;
 	
 	
 	//사용자가 로그인하려고 할때...
@@ -66,8 +73,31 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 	
 	//사용자가 인증 성공되면...
 	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
+		CustomUserDetails customUserDetails=(CustomUserDetails)authentication.getPrincipal();
+		String username = customUserDetails.getUsername(); //uid  반환
+		String role=customUserDetails.getMember().getRole().getRole_name();
+		
 		log.debug("회원정보가 존재합니다.로그인 성공");
+		
+		//회원정보가 존재하므로, 세션 로그인 처리 대신 클라이언트에게 JWT 토큰을 발급해주자 
+		long expireTime = (1*1000*60)*60; //60분
+		String token=null;
+		try {
+			token = jwtUtil.generateToken(username, role, expireTime);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//생성된 결과물인 토큰을 클라이언트에게 전송하자!!
+		//따라서 응답정보를 만들자...
+		Map<String, Object> responseMap = new HashMap();
+		responseMap.put("success", true);
+		responseMap.put("token", token);
+		
+		response.setStatus(HttpServletResponse.SC_OK);//200
+		response.setContentType("application/json");
+		new ObjectMapper().writeValue(response.getOutputStream()  , responseMap);
 	}
 	
 	//사용자 인증이 실패되면..
