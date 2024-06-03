@@ -22,14 +22,15 @@ public class RecommendController {
 	@Autowired
 	private RecommendService recommendService;
 	
-	@GetMapping("/")
+	@GetMapping("/list/view")
 	public String getList(HttpSession session, Model model) {
+		/*
 		Member member =(Member)session.getAttribute("member");
 		
 		//3단계 : 추천영화 목록 가져오기 
 		List recommendList = recommendService.getList(member.getMember_idx());
 		model.addAttribute("recommendList", recommendList);//저장 
-		
+		*/
 		return "recommend/list";
 	}
 }

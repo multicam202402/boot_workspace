@@ -1,11 +1,13 @@
 package com.sds.recommendapp;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import com.sds.recommendapp.jwt.CustomEntryPoint;
 
 //스프링 3.0 부터 스프링빈 xml 파일을 대신하여 어노테이션 기반으로 설정할 수 있도록 지원..
 /*
@@ -16,62 +18,53 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @Configuration
 public class SecurityConfig {
 	
-	//스프링이 지원하는 단방향 암호화(해시) 객체 등록
-	@Bean 
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	@Autowired
+	private CustomEntryPoint customEntryPoint;
 	
-	//우리가 spring mvc 에서 AOP를 이용하여 uri를 걸러낸 작업을 스프링 부트 시큐리티에서는 보다 쉽고 체계적으로
-	//지원...
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 		
-		//필터링 할 uri 명시..
-		httpSecurity
-			.authorizeHttpRequests(
-				(auth) -> auth
-				.requestMatchers("/site/**").permitAll() //정적 자원 uri 열어놓기
-				.requestMatchers("/").hasAnyAuthority("USER") 
-				.anyRequest().authenticated()
-			);
-	
-		//로그인에 대한 설정
-		httpSecurity
-			.formLogin((auth)->
-				auth.loginPage("http://localhost:7979/movieapp/member/loginform")
-				.successHandler(loginEventHandler()) //개발자가 정의한 핸들러 등록...
-				.loginProcessingUrl("/member/login")
-				.usernameParameter("uid")
-				.passwordParameter("password")
-			);
+		/*-----------------------------------------
+		 CSRF 공격 방지 비활성화 
+		-----------------------------------------*/
+		httpSecurity.csrf((auth)->auth.disable());
 		
-		//로그아웃 설정 
-		httpSecurity
-		.logout(logout -> logout
-			.logoutUrl("http://localhost:7979/movieapp/member/logout") //로그아웃 요청 페이지경로
-			.logoutSuccessUrl("/") //로그아웃 처리 후, 보여질 링크 
-			.invalidateHttpSession(true) //세션 무효화 
-			.clearAuthentication(true) //권한 없애기 
-			.deleteCookies("JSESSIONID")
+
+		/*-----------------------------------------
+		인증되지 않은 사용자가, 보호된 리소스에 접근할때의 예외처리 설정 객체 등록
+		-----------------------------------------*/
+		httpSecurity.exceptionHandling(e -> e.authenticationEntryPoint(customEntryPoint));
+
+		
+		/*-----------------------------------------
+		JWT를 이용할 것이므로, 세션 관리를 비활성화하고, 상태 비저장(stateless) 방식 사용
+		-----------------------------------------*/
+		httpSecurity.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+		
+		/*-----------------------------------------
+		URI 권한 설정 
+		-----------------------------------------*/
+		httpSecurity.authorizeHttpRequests( (auth)-> auth
+			
+			/*-------------------------------------
+			 권한 필요없는 uri 설정
+			-------------------------------------*/	
+			.requestMatchers("/site/**").permitAll() //정적 자원 열어 놓기
+			.requestMatchers("/list/view").permitAll() //영화 추천 목록 열어놓기
+			
+			/*-------------------------------------
+			 권한이 요구되는 uri 설정
+			-------------------------------------*/	
+			.anyRequest().authenticated()
+			
 		);
 		
-		//토큰 비활성화 
-		httpSecurity.csrf((auth)->auth.disable());
+		
 		
 		return httpSecurity.build();
 	}
 
-	/*-----------------------------------------------------------
-	  OAuth 유져와  시큐리티를 이용한 홈페이지 로그인 유저가 session에 공통의 member DTO를
-	  갖고 있게 하면, header 뿐 아니라, 회원 정보를 세션에서 꺼내올때 member로 통일 할 수 있다.. 
-	  이를 위해, 시큐리티한테 모든걸 맡기지 말고, 로그인 하는 시점을 낚아 채서, 억지로 session 에 
-	  member DTO를 심어버리자..
-	-----------------------------------------------------------*/
-	@Bean 
-	public AuthenticationSuccessHandler loginEventHandler() {
-		return new LoginEventHandler();
-	}
 	
 }
 
