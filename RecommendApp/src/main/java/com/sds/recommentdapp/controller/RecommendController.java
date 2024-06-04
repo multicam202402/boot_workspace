@@ -23,7 +23,10 @@ public class RecommendController {
 	private RecommendService recommendService;
 	
 	@GetMapping("/list/view")
-	public String getList(HttpSession session, Model model) {
+	public String getList() {
+		
+		log.debug("getList 호출");
+		
 		/*
 		Member member =(Member)session.getAttribute("member");
 		
