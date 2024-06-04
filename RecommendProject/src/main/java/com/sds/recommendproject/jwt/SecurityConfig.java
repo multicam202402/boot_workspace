@@ -18,6 +18,7 @@ public class SecurityConfig {
 			/*------------------------------------------
 			권한이 필요 없는 uri
 			------------------------------------------*/
+			.requestMatchers("/site/**").permitAll() //정적자원 해제
 			.requestMatchers("/list/view").permitAll()
 				
 			
