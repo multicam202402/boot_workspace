@@ -26,19 +26,21 @@ import lombok.extern.slf4j.Slf4j;
 //주의) 이 클래스를 재정의 한다는 것 자체가 jwt를 이용하는것은 아니다!~! 단지 이 클래스는 로그인 하는 순간을 제어할 수 있는
 //클래스인 것 뿐이다..
 @Slf4j
-public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
+public class LoginFilter extends UsernamePasswordAuthenticationFilter{
+	
+	
+	private JwtUtil jwtUtil;
 	
 	//AuthenticationManager 는 인터페이스이고, 스프링시큐리티 내부적으로 생성되어 처리되므로, 
 	//개발자는 스프링으로부터 얻어와 사용해야 한다..
 	
 	private AuthenticationManager authenticationManager;
 
-	public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
+	public LoginFilter(AuthenticationManager authenticationManager) throws Exception{
 		this.authenticationManager = authenticationManager; 
+		jwtUtil = new JwtUtil();
 	}
 	
-	@Autowired
-	private JwtUtil jwtUtil;
 	
 	
 	//사용자가 로그인하려고 할때...

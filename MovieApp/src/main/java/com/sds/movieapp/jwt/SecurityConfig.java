@@ -70,7 +70,7 @@ public class SecurityConfig {
 		httpSecurity.formLogin((auth)-> auth.disable());
 		
 		//기존의 UsernamePasswordAuthenticationFilter 를 대시한 객체를 명시
-		CustomAuthenticationFilter customFilter = new CustomAuthenticationFilter(authenticationManager());
+		LoginFilter customFilter = new LoginFilter(authenticationManager());
 		customFilter.setFilterProcessesUrl("/member/login");
 		httpSecurity.addFilterAt(customFilter, UsernamePasswordAuthenticationFilter.class);
 		
@@ -86,6 +86,7 @@ public class SecurityConfig {
 			//);
 		
 		//로그아웃 설정 
+		/*
 		httpSecurity
 		.logout(logout -> logout
 			.logoutUrl("/member/logout") //로그아웃 요청 페이지경로
@@ -94,6 +95,7 @@ public class SecurityConfig {
 			.clearAuthentication(true) //권한 없애기 
 			.deleteCookies("JSESSIONID")
 		);
+		*/
 		
 		//토큰 비활성화 
 		httpSecurity.csrf((auth)->auth.disable());
