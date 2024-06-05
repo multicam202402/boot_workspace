@@ -58,6 +58,8 @@ public class SecurityConfig {
 				.requestMatchers("/member/sns/naver/callback").permitAll()
 				.requestMatchers("/member/sns/kakao/callback").permitAll()
 				
+				.requestMatchers("/jwt/key").permitAll() //api 열기 
+				
 				//영화관련 
 				//.requestMatchers("/movie/detail").hasAnyAuthority("USER")
 				

@@ -91,6 +91,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter{
 			e.printStackTrace();
 		}
 		
+		//생성된 키 중에서 공개키를 ServletContext에 담아두고, MSA를 이루는 서비스들이 
+		//요구할때 api로 제공해주자 (보안 이슈..추후논의..)
+		
+		//jsp에서의 application내장객체
+		request.getServletContext().setAttribute("key", jwtUtil.getEncodedPublicKey()); //인코딩된 문자열로..
+		log.debug("ServletContextdp 담게될 인코딩된 publicKey is "+jwtUtil.getEncodedPublicKey());
+		
+		
 		//생성된 결과물인 토큰을 클라이언트에게 전송하자!!
 		//따라서 응답정보를 만들자...
 		Map<String, Object> responseMap = new HashMap();
