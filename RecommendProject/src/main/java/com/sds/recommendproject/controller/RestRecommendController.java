@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sds.recommendproject.domain.Movie;
+import com.sds.recommendproject.jwt.JwtParser;
 import com.sds.recommendproject.jwt.KeyService;
+import com.sds.recommendproject.model.member.MemberService;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,9 +24,15 @@ public class RestRecommendController {
 	@Autowired
 	private KeyService keyService;
 	
+	@Autowired
+	private JwtParser jwtParser;
 	
+	@Autowired
+	private MemberService memberService;
+	
+	//영화 추천 목록 데이터 요청처리 (클라이언트가 비동기방식으로 헤더의 Authorization Bearer에 토큰(서명된 jwt)을 전송함 )
 	@GetMapping("/list")
-	public List<Movie> getList(@RequestHeader("Authorization") String header) {
+	public List<Movie> getList(@RequestHeader("Authorization") String header) throws Exception {
 		
 		log.debug("넘겨받은 헤더중 Authorization 의 값은 "+header);
 		
@@ -32,7 +42,18 @@ public class RestRecommendController {
 		//공개키로 풀자...서비스객체에게 일 시키기
 		String publicKey = keyService.getPublicKey();
 		
+		log.debug("MovieApp가 제공하는 공개키 String은 "+publicKey);
 		
+		//공개키를 이용하여, 복호화된 jwt 의 payload(몸체) 부분을 암호분야 에서는 Claim이라 한다 
+		Claims claims=Jwts.parser().setSigningKey(jwtParser.getPublicKeyFromString(publicKey)).parseClaimsJws(token).getBody();
+		
+		String uid = claims.getSubject(); // 우리의 경우 제목에 uid가 들어있씀
+		log.debug("uid is "+uid);
+		
+		//uid  를 이용하여 회원정보 가져오기 (~~님 포함하여 기타 회원정보를)
+		 
+		
+		//회원 정보를 이용하여 , 영화추천 목록 가져오기 
 		
 		return null;
 	}
