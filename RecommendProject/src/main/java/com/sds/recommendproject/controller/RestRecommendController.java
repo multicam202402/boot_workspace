@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sds.recommendproject.domain.Member;
 import com.sds.recommendproject.domain.Movie;
 import com.sds.recommendproject.jwt.JwtParser;
 import com.sds.recommendproject.jwt.KeyService;
 import com.sds.recommendproject.model.member.MemberService;
+import com.sds.recommendproject.model.recommend.RecommendService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -28,7 +30,11 @@ public class RestRecommendController {
 	private JwtParser jwtParser;
 	
 	@Autowired
-	private MemberService memberService;
+	private MemberService memberService; //회원정보 가져오기 위한 서비스 
+	
+	@Autowired
+	private RecommendService recommendService;//영화 추천 정보 가져오기 위한 서비스 
+	
 	
 	//영화 추천 목록 데이터 요청처리 (클라이언트가 비동기방식으로 헤더의 Authorization Bearer에 토큰(서명된 jwt)을 전송함 )
 	@GetMapping("/list")
@@ -51,11 +57,13 @@ public class RestRecommendController {
 		log.debug("uid is "+uid);
 		
 		//uid  를 이용하여 회원정보 가져오기 (~~님 포함하여 기타 회원정보를)
-		 
+		Member member = memberService.selectByUid(uid);
 		
-		//회원 정보를 이용하여 , 영화추천 목록 가져오기 
+		//회원 정보를 이용하여 , 영화추천 목록 가져오기
+		List<Movie> recommendList = recommendService.getList(member.getMember_idx());
 		
-		return null;
+		
+		return recommendList;
 	}
 }
 
