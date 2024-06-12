@@ -81,11 +81,9 @@ public class RestMemberController {
 			throw new JwtException("JWT 인증실패");
 		}
 		
-		
 		return null;
 	}
-	
-	//헤더는 있지만 유효하지 않은 경우
+
 	
 }
 
