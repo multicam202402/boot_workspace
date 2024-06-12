@@ -26,7 +26,7 @@ const LoginView={
 	`,
 	data(){ //1단계 :  Vue 인스턴스가 생성될 때 실행되어 초기 데이터 객체를 반환
 		return {
-			msg:"test" 			
+			member:null 			
 		}
 	},
 	mounted(){ //3단계
@@ -36,7 +36,8 @@ const LoginView={
 	methods:{
 		fetchMember(){
 			//서버로부터 jwt  토큰을 요청
-			getMemberInfo();
+			getMemberInfo().then();
+			alert("vue의 member 변수값은 "+this.member);
 		}
 	}	
 }
@@ -56,21 +57,27 @@ loginApp.mount("#loginApp");
 만일 유효한 토큰이면 member json을 전송해주고, 아니면 에러 응답 정보를 보낸다
 ---------------------------------------------------------  */
 function getMemberInfo(){
-	$.ajax({
+	
+	//$.ajax()함수의 수행 후, 원칙적으로 Promise 객체가 반환된다.. 
+	//이 Promise 객체의 then() 을 이용하면, 비동기방식으로 동작하는 로직이 완료되는 시점에 , 원하는 처리를 할 수 있다..즉 동기방식의
+	//처리가 가능..
+	return $.ajax({
 		url:"/movieapp/rest/member/logincheck",
 		type:"GET",
 		dataType:"json", //서버로부터 받을 데이터 형식이 json임을 서버에게 알린다 
 		headers:{
 			"Authorization" :"Bearer "+getToken()
+		}		
+	})
+	//then()   ajax() 에 의해 비동기방식으로 실행된 코드가 수행완료된 후 , 처리하고싶은 코드를 작성하는 메서드 영역
+	.then(
+		function(result, status, xhr){
+			return result;
 		},
-		success:function(result, status, xhr){
-			console.log(result);
-		},
-		error:function(xhr, status, err){
-			console.log("회원정보가 없습니다");
+		function(xhr, status, err){
+			throw new Error(err);
 		}
-		
-	});
+	);
 }
 
 
