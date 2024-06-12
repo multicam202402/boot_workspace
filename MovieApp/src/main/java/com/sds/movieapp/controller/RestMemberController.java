@@ -11,9 +11,16 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sds.movieapp.exception.JwtException;
+import com.sds.movieapp.jwt.JwtUtil;
 import com.sds.movieapp.sns.KaKaoLogin;
 import com.sds.movieapp.sns.NaverLogin;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.servlet.ServletContext;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +37,9 @@ public class RestMemberController {
 	
 	@Autowired
 	private ServletContext servletContext;
+	
+	@Autowired
+	private JwtUtil jwtUtil;
 	
 	//로그인 요청에 필요한 링크 주소 및 파라미터 생성 요청 처리 
 	@GetMapping("/rest/member/authform/{sns}")
@@ -60,28 +70,22 @@ public class RestMemberController {
 		
 		//넘겨받은 token은 순수 jwt 가 아니라, 비밀키에 의해 서명되어 암호화 되어 있다. 
 		//따라서, 공개키를 이용하여 암호를 풀어보자 
+		String publicKey = (String)servletContext.getAttribute("key"); //Base64기반의 
 		
+		Claims claims=null;
 		
+		try {
+			Jwts.parser().setSigningKey(jwtUtil.getPublicKeyFromString(publicKey)).parseClaimsJws(token).getBody();
+		}catch (Exception e) {
+			log.debug("JWT 인증실패");
+			throw new JwtException("JWT 인증실패");
+		}
 		
 		
 		return null;
 	}
 	
-	//아예 헤더가 없는 경우
-	@ExceptionHandler(MissingRequestHeaderException.class)
-	public ResponseEntity handle(MissingRequestHeaderException e) {
-		log.debug("헤더 값이 없네요");
-		ResponseEntity entity =ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();   
-		return entity;
-	}
-	
 	//헤더는 있지만 유효하지 않은 경우
-	@ExceptionHandler(JwtException.class)
-	public ResponseEntity handle(JwtException e) {
-		log.debug("헤더 값은 존재하지만, 토큰이 유효하지 않네요");
-		ResponseEntity entity =ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();   
-		return entity;
-	}
 	
 }
 

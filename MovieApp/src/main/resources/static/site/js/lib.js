@@ -13,13 +13,12 @@ ex)  <login-view></login-view>
 const LoginView={
 	//2단계로 실행 : 가상 DOM 영역 ,  html 에 실제적으로 적용되는 실제DOM의 이전 단계
 	template:`
-    	<span v-if="member">
-    		<input type="hidden" id="member_idx" v-model="member.member_idx">
-        	<a href="#" >{{member.nickname}}</a>                        		
+    	<span>
+        	<a href="#" >{{msg}}</a>                        		
         	<a href="javascript:logout()">logout</a> 
         </span>
         
-    	<span v-else>
+    	<span>
             <span>
             	<a href="/movieclient/member/loginform"><span class="icon_profile"></span></a>
             </span>
@@ -27,18 +26,17 @@ const LoginView={
 	`,
 	data(){ //1단계 :  Vue 인스턴스가 생성될 때 실행되어 초기 데이터 객체를 반환
 		return {
-			member:null 			
+			msg:"test" 			
 		}
 	},
-	mounted(){
-		console.log("mounted!!");
+	mounted(){ //3단계
+		//alert("mounted!!");
 		this.fetchMember();
 	},
 	methods:{
 		fetchMember(){
-			alert("fetchMember() 호출");
 			//서버로부터 jwt  토큰을 요청
-			//getMemberInfo();
+			getMemberInfo();
 		}
 	}	
 }
