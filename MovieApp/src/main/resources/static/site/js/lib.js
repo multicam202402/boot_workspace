@@ -13,14 +13,14 @@ ex)  <login-view></login-view>
 const LoginView={
 	//2단계로 실행 : 가상 DOM 영역 ,  html 에 실제적으로 적용되는 실제DOM의 이전 단계
 	template:`
-    	<span>
-        	<a href="#" >{{msg}}</a>                        		
+    	<span v-if="member">
+        	<a href="#">{{member.nickname}}</a>                        		
         	<a href="javascript:logout()">logout</a> 
         </span>
         
-    	<span>
+    	<span v-else>
             <span>
-            	<a href="/movieclient/member/loginform"><span class="icon_profile"></span></a>
+            	<a href="/movieapp/member/loginform"><span class="icon_profile"></span></a>
             </span>
         </span>
 	`,
@@ -36,8 +36,14 @@ const LoginView={
 	methods:{
 		fetchMember(){
 			//서버로부터 jwt  토큰을 요청
-			getMemberInfo().then();
-			alert("vue의 member 변수값은 "+this.member);
+			getMemberInfo()
+			.then(result =>{
+				this.member=result;
+				alert("vue의 member 변수값은 "+this.member);
+			})
+			.fail( err => {
+				console.log(err);
+			});			
 		}
 	}	
 }
