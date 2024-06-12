@@ -8,15 +8,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sds.movieapp.domain.Member;
-import com.sds.movieapp.exception.JwtException;
-import com.sds.movieapp.jwt.JwtUtil;
+import com.sds.movieapp.jwt.JwtValidService;
 import com.sds.movieapp.model.member.MemberService;
 import com.sds.movieapp.sns.KaKaoLogin;
 import com.sds.movieapp.sns.NaverLogin;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import jakarta.servlet.ServletContext;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -31,13 +27,11 @@ public class RestMemberController {
 	
 	
 	@Autowired
-	private ServletContext servletContext;
-	
-	@Autowired
-	private JwtUtil jwtUtil;
-	
-	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private JwtValidService jwtValidService;
+	
 	
 	//로그인 요청에 필요한 링크 주소 및 파라미터 생성 요청 처리 
 	@GetMapping("/rest/member/authform/{sns}")
@@ -60,32 +54,10 @@ public class RestMemberController {
 	//넘겨받은 토큰이 유효한지 여부를 따져보고, 유효할 경우엔  Member 를 json으로 응답 
 	@GetMapping("/rest/member/logincheck")
 	public ResponseEntity getLoginMember(@RequestHeader("Authorization") String header) {
-		
 		log.debug("토큰 검증 요청");
 		
 		//넘어온 헤더값 중, Bearer를 제외한 순수 토큰만 추출 
-		String token = header.replace("Bearer", "");
-		
-		//넘겨받은 token은 순수 jwt 가 아니라, 비밀키에 의해 서명되어 암호화 되어 있다. 
-		//따라서, 공개키를 이용하여 암호를 풀어보자 
-		String publicKey = (String)servletContext.getAttribute("key"); //Base64기반의 
-		
-		Claims claims=null;
-		
-		try {
-			claims = Jwts.parser().setSigningKey(jwtUtil.getPublicKeyFromString(publicKey)).parseClaimsJws(token).getBody();
-			
-		}catch (Exception e) {
-			log.debug("JWT 인증실패");
-			throw new JwtException("JWT 인증실패");
-		}
-		
-		String uid = claims.getSubject(); //JWT의 body의 제목에 넣어 둔 uid를 꺼내자
-		Member member=memberService.selectByUid(uid);
-		
-		ResponseEntity entity = ResponseEntity.ok(member);
-		
-		return entity;
+		return ResponseEntity.ok(jwtValidService.getMemberFromJwt(header.replace("Bearer", "")));
 	}
 
 	
