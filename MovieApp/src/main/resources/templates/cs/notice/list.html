@@ -81,6 +81,8 @@
 <script type="text/javascript">
 	//목록을 처리할 컴포넌트 정의 
 	const ListView={
+			
+		//2단계: data() 메서드가 반환한 데이터를 내부 template에 바인딩	
 		template:`
         	
 			<div class="card">
@@ -120,7 +122,30 @@
 			<div>
 				<a>[1][2][3]</a>
 			</div>
-		`			
+		`,
+		//1단계) template 영역에 보여질 데이터 반환
+		data(){
+			return {
+				
+			}
+		},
+		mounted(){
+			this.getData();
+		},
+		methods:{
+			
+			//서버에서 리스트 가져오기
+			getData(){
+				//비동기방식으로 서버에 리스트를 요청...비동기방식다 보니, 데이터를 가져온 시점에 data() 영역으로 가져온 json list 를 대입하려면
+				//동기방식의 처리가 필요함, 따라서 Promise 이용하자 
+				getNoticeList().then(result =>{ 
+					console.log("서버에서 가져온 데이터는 ",result);
+				})
+				.fail(err=>{
+					console.log(err);					
+				});
+			}
+		}
 	}
 	
 	//Vue 앱 생성 
@@ -133,6 +158,25 @@
 	//Vue 앱과 html 렌더링 영역과의 마운트(연결) 
 	noticeApp.mount("#noticeApp");
 
+	//Promise로 동작할 비동기함수 정의 
+	function getNoticeList(){
+		return $.ajax({
+			url:"/movieapp/rest/cs/notice",
+			type:"get"
+		})
+		.then(
+			function(result, status, xhr){
+				//여기서 vue의 컴포넌트를 접근할려고 하지말자!!
+				//왜? 이 영역은 앞으로 이 ajax 로 가져온 데이터가 then() 이후에 동작한다는 것만 정의
+				return result;
+			}, //success
+			function(xhr, status, err){
+				throw new Error(err);
+			} //error
+		);
+	}
+	
+	
 	$(function(){
 		$("#bt_regist").click(function(){
 			//글쓰기 폼 요청

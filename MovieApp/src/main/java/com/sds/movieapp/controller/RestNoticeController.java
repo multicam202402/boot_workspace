@@ -1,8 +1,13 @@
 package com.sds.movieapp.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +48,19 @@ public class RestNoticeController {
 		noticeService.regist(noticeDoc);
 		
 		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+	
+	//글목록 요청 처리 
+	@GetMapping("/rest/cs/notice")
+	public List selectAll() {
+		
+		Map map = new HashMap();
+		map.put("startIndex", 0);
+		map.put("rowCount", 10);
+		
+		List noticeList = noticeService.selectAll(map);
+		
+		return noticeList;
 	}
 	
 }
