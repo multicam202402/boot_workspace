@@ -1,6 +1,7 @@
 package com.sds.movieapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -10,6 +11,7 @@ import com.sds.movieapp.domain.Member;
 import com.sds.movieapp.domain.NoticeDoc;
 import com.sds.movieapp.exception.JwtException;
 import com.sds.movieapp.jwt.JwtValidService;
+import com.sds.movieapp.model.cs.notice.NoticeService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,6 +21,10 @@ public class RestNoticeController {
 	
 	@Autowired
 	private JwtValidService jwtValidService;
+	
+	@Autowired
+	private NoticeService noticeService;
+	
 	
 	//글쓰기 요청 처리 
 	@PostMapping("/rest/cs/notice")
@@ -34,7 +40,9 @@ public class RestNoticeController {
 			throw new JwtException("로그인이 필요한 서비스입니다");
 		}
 		
-		return null;
+		noticeService.regist(noticeDoc);
+		
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 }

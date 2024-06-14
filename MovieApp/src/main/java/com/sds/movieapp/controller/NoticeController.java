@@ -23,14 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class NoticeController {
 	
-	@Autowired
-	private NoticeService noticeService;
-	
-	@Autowired
-	private Pager pager;
-	
-	
-	//게시물 목록
+	//게시물 목록 페이지 요청
 	@GetMapping("/cs/notice/list")
 	public String getListPage() {
 		
@@ -41,50 +34,6 @@ public class NoticeController {
 	@GetMapping("/cs/notice/writeform")
 	public String getWriteForm() {
 		return "cs/notice/regist";
-	}
-	
-	//글쓰기 요청 처리 
-	@PostMapping("/cs/notice/regist")
-	public String regist(NoticeDoc notice) {
-		noticeService.insert(notice); //3단계: 글 등록
-		
-		return "redirect:/cs/notice/list";
-	}
-	
-	//글 한건 요청 처리 
-	@GetMapping("/cs/notice/detail")
-	public String getDetail(NoticeDoc notice, Model model) {
-		log.info("선택한 글의 id는 "+notice.getId());
-		
-		NoticeDoc dto = noticeService.select(notice);
-		model.addAttribute("notice", dto);
-		
-		return "cs/notice/content";
-	}
-	
-	//글 한건 수정 요청 처리 
-	@PostMapping("/cs/notice/edit")
-	public String edit(NoticeDoc notice) {
-		
-		noticeService.update(notice);
-		
-		return "redirect:/cs/notice/detail?id="+notice.getId();
-	}
-	
-	@PostMapping("/cs/notice/del")
-	public String del(NoticeDoc notice) {
-		
-		noticeService.delete(notice);
-		
-		return "redirect:/cs/notice/list";
-	}
-	
-	@ExceptionHandler(NoticeException.class)
-	public ModelAndView handle(NoticeException e) {
-		ModelAndView mav = new ModelAndView("error/result");
-		mav.addObject("e", e);
-		
-		return mav;
 	}
 	
 }

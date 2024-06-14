@@ -30,7 +30,7 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 	
 	@Override
-	public void insert(NoticeDoc notice) throws NoticeException{
+	public void regist(NoticeDoc notice) throws NoticeException{
 		noticeDAO.insert(notice);		
 	}
 
