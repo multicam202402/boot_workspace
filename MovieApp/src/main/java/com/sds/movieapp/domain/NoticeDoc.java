@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Document
-public class Notice {
+public class NoticeDoc {
 	
 	@Id
 	private String id; 

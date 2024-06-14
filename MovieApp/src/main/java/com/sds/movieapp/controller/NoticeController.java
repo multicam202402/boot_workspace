@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sds.movieapp.common.Pager;
-import com.sds.movieapp.domain.Notice;
+import com.sds.movieapp.domain.NoticeDoc;
 import com.sds.movieapp.exception.NoticeException;
 import com.sds.movieapp.model.cs.notice.NoticeService;
 
@@ -32,17 +32,7 @@ public class NoticeController {
 	
 	//게시물 목록
 	@GetMapping("/cs/notice/list")
-	public String getList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
-		
-		pager.init(noticeService.selectCount(), currentPage);
-		
-		HashMap map=new HashMap();
-		map.put("startIndex", pager.getStartIndex());
-		map.put("rowCount", pager.getPageSize());
-		
-		List noticeList = noticeService.selectAll(map); //3단계: 일 시키기 
-		model.addAttribute("noticeList", noticeList); //4단계: 결과 저장
-		model.addAttribute("pager", pager); //4단계: 결과 저장
+	public String getListPage() {
 		
 		return "cs/notice/list";
 	}
@@ -55,7 +45,7 @@ public class NoticeController {
 	
 	//글쓰기 요청 처리 
 	@PostMapping("/cs/notice/regist")
-	public String regist(Notice notice) {
+	public String regist(NoticeDoc notice) {
 		noticeService.insert(notice); //3단계: 글 등록
 		
 		return "redirect:/cs/notice/list";
@@ -63,10 +53,10 @@ public class NoticeController {
 	
 	//글 한건 요청 처리 
 	@GetMapping("/cs/notice/detail")
-	public String getDetail(Notice notice, Model model) {
+	public String getDetail(NoticeDoc notice, Model model) {
 		log.info("선택한 글의 id는 "+notice.getId());
 		
-		Notice dto = noticeService.select(notice);
+		NoticeDoc dto = noticeService.select(notice);
 		model.addAttribute("notice", dto);
 		
 		return "cs/notice/content";
@@ -74,7 +64,7 @@ public class NoticeController {
 	
 	//글 한건 수정 요청 처리 
 	@PostMapping("/cs/notice/edit")
-	public String edit(Notice notice) {
+	public String edit(NoticeDoc notice) {
 		
 		noticeService.update(notice);
 		
@@ -82,7 +72,7 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/cs/notice/del")
-	public String del(Notice notice) {
+	public String del(NoticeDoc notice) {
 		
 		noticeService.delete(notice);
 		

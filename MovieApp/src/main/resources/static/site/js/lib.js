@@ -39,7 +39,7 @@ const LoginView={
 			getMemberInfo()
 			.then(result =>{
 				this.member=result;
-				alert("vue의 member 변수값은 "+this.member);
+				//alert("vue의 member 변수값은 "+this.member);
 			})
 			.fail( err => {
 				console.log(err);
