@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sds.movieapp.domain.Member;
@@ -52,15 +53,24 @@ public class RestNoticeController {
 	
 	//글목록 요청 처리 
 	@GetMapping("/rest/cs/notice")
-	public List selectAll() {
+	public Map selectAll( 
+			@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+			@RequestParam(value="pageSize", defaultValue="10") int pageSize) {
 		
 		Map map = new HashMap();
-		map.put("startIndex", 0);
-		map.put("rowCount", 10);
+		map.put("startIndex", (currentPage-1)*pageSize);
+		map.put("rowCount", pageSize);
 		
 		List noticeList = noticeService.selectAll(map);
 		
-		return noticeList;
+		map.put("noticeList", noticeList);
+		
+		//몽고db의 모든 게시물 수 
+		int totalRecord = noticeService.selectCount();
+		map.put("totalRecord", totalRecord);
+		
+		
+		return map;
 	}
 	
 }

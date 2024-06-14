@@ -104,14 +104,14 @@
 			            </thead>
 			            <tbody>
 			            
-			                <tr>
-			                    <td></td>
+			                <tr v-for="(notice , index) in noticeList" :key="notice.id">
+			                    <td>{{num-index}}</td>
 			                    <td>
-			                    	<a href="#"></a>
+			                    	<a href="#">{{notice.title}}</a>
 			                    </td>
-			                    <td></td>
-			                    <td></td>
-			                    <td></td>
+			                    <td>{{notice.writer}}</td>
+			                    <td>{{notice.regdate}}</td>
+			                    <td>{{notice.hit}}</td>
 			                </tr>
 			            
 			            </tbody>
@@ -126,20 +126,37 @@
 		//1단계) template 영역에 보여질 데이터 반환
 		data(){
 			return {
-				
+				noticeList:null,
+				num:0 //페이지당 시작할 게시물 번호 
 			}
 		},
 		mounted(){
-			this.getData();
+			this.getData(1,10);
 		},
 		methods:{
 			
 			//서버에서 리스트 가져오기
-			getData(){
+			getData(currentPage, pageSize){
 				//비동기방식으로 서버에 리스트를 요청...비동기방식다 보니, 데이터를 가져온 시점에 data() 영역으로 가져온 json list 를 대입하려면
 				//동기방식의 처리가 필요함, 따라서 Promise 이용하자 
-				getNoticeList().then(result =>{ 
-					console.log("서버에서 가져온 데이터는 ",result);
+				getNoticeList(currentPage, pageSize).then(result =>{  //skip(몇번째부터).limit(몇건)
+					console.log("서버에서 가져온 데이터는 ", result);
+					this.noticeList = result.noticeList;
+					
+					//페이징 계산 처리
+					let pager  = new Pager(result.totalRecord, pageSize, currentPage);
+					
+					console.log("totalRecord = "+pager.totalRecord);
+					console.log("pageSize = "+pager.pageSize);
+					console.log("totalPage = "+pager.totalPage);
+					console.log("currentPage = "+pager.currentPage);
+					console.log("blockSize = "+pager.blockSize);
+					console.log("firstPage = "+pager.firstPage);
+					console.log("lastPage = "+pager.lastPage);
+					console.log("curPos = "+pager.curPos);
+					console.log("num = "+pager.num);
+					this.num=pager.num;
+					
 				})
 				.fail(err=>{
 					console.log(err);					
@@ -159,9 +176,9 @@
 	noticeApp.mount("#noticeApp");
 
 	//Promise로 동작할 비동기함수 정의 
-	function getNoticeList(){
+	function getNoticeList(currentPage, pageSize){
 		return $.ajax({
-			url:"/movieapp/rest/cs/notice",
+			url:"/movieapp/rest/cs/notice?currentPage="+currentPage+"&pageSize="+pageSize,
 			type:"get"
 		})
 		.then(
