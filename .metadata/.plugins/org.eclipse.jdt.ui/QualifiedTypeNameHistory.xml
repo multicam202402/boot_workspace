@@ -34,7 +34,6 @@
     <fullyQualifiedTypeName name="org.springframework.security.config.annotation.web.configuration.EnableWebSecurity"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
     <fullyQualifiedTypeName name="com.sds.recommendproject.domain.Movie"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
     <fullyQualifiedTypeName name="org.springframework.http.HttpHeaders"/>
     <fullyQualifiedTypeName name="org.springframework.http.HttpEntity"/>
@@ -48,16 +47,17 @@
     <fullyQualifiedTypeName name="com.sds.recommendproject.jwt.JwtParser"/>
     <fullyQualifiedTypeName name="com.sds.recommendproject.domain.Member"/>
     <fullyQualifiedTypeName name="jakarta.servlet.http.HttpServletRequest"/>
-    <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
     <fullyQualifiedTypeName name="org.springframework.http.HttpStatusCode"/>
     <fullyQualifiedTypeName name="org.springframework.boot.web.servlet.ServletContextInitializer"/>
     <fullyQualifiedTypeName name="com.sds.movieapp.jwt.JwtUtil"/>
     <fullyQualifiedTypeName name="io.jsonwebtoken.Jwts"/>
     <fullyQualifiedTypeName name="lombok.Builder.Default"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ControllerAdvice"/>
-    <fullyQualifiedTypeName name="java.util.Map"/>
     <fullyQualifiedTypeName name="lombok.extern.slf4j.Slf4j"/>
+    <fullyQualifiedTypeName name="com.sds.movieapp.domain.Member"/>
     <fullyQualifiedTypeName name="com.sds.movieapp.exception.JwtException"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
-    <fullyQualifiedTypeName name="com.sds.movieapp.domain.Member"/>
+    <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
 </qualifiedTypeNameHistroy>
