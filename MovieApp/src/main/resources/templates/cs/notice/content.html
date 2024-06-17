@@ -50,26 +50,26 @@
 					    </div>
 					
 					    <form id="form1" class="form-horizontal">
-					    	<input type="hidden" name="id" th:value="${notice.id}">
+					    	<input type="hidden" name="id">
 					        <div class="card-body">
 					            <div class="form-group row">
 					                <label for="title" class="col-sm-2 col-form-label">제목</label>
 					                <div class="col-sm-10">
-					                    <input type="text" class="form-control" id="title" name="title" th:value="${notice.title}">
+					                    <input type="text" class="form-control" id="title" name="title" >
 					                </div>
 					            </div>
 					            
 					            <div class="form-group row">
 					                <label for="writer" class="col-sm-2 col-form-label">작성자</label>
 					                <div class="col-sm-10">
-					                    <input type="text" class="form-control" id="writer" name="writer" th:value="${notice.writer}">
+					                    <input type="text" class="form-control" id="writer" name="writer">
 					                </div>
 					            </div>
 					            
 					            <div class="form-group row">
 					                <label for="content" class="col-sm-2 col-form-label">내용</label>
 					                <div class="col-sm-10">
-					                    <textarea class="form-control" id="content" name="content" th:text="${notice.content}"></textarea>
+					                    <textarea class="form-control" id="content" name="content" ></textarea>
 					                </div>
 					            </div>
 					        </div>
@@ -122,6 +122,21 @@
 		});
 		$("#form1").submit();
 	}
+	
+	
+	//상세보기 요청 (헤더에 토큰 가지고 요청할 예정)
+	function getContent(){
+		//서버에서 데이터 가져온 후, 디자인에 반영 Promise 이용하자 
+		return $.ajax({
+			url :"", 
+			type:"",
+			headers:{
+				
+			}
+		})
+		.then();
+	}
+	
 	
 	
 	$(function(){

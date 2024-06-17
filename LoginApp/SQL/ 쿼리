@@ -1,3 +1,10 @@
+
+
+create database  loginapp;
+
+
+
+
 create table member(
    member_idx  int  primary key auto_increment
   , id varchar(20)
