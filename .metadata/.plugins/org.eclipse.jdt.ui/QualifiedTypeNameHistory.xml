@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
-    <fullyQualifiedTypeName name="java.util.Arrays"/>
-    <fullyQualifiedTypeName name="com.sds.recommendapp.domain.Movie"/>
-    <fullyQualifiedTypeName name="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter"/>
-    <fullyQualifiedTypeName name="com.sds.movieapp.jwt.CustomAuthenticationFilter"/>
-    <fullyQualifiedTypeName name="org.springframework.security.authentication.AuthenticationManager"/>
     <fullyQualifiedTypeName name="org.springframework.security.authentication.UsernamePasswordAuthenticationToken"/>
     <fullyQualifiedTypeName name="java.security.KeyPairGenerator"/>
     <fullyQualifiedTypeName name="org.springframework.data.mongodb.core.aggregation.SetOperators.SetIsSubset"/>
@@ -60,4 +54,10 @@
     <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="ch.qos.logback.core.model.Model"/>
+    <fullyQualifiedTypeName name="org.springframework.ui.Model"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
+    <fullyQualifiedTypeName name="com.sds.movieapp.domain.NoticeDoc"/>
+    <fullyQualifiedTypeName name="com.sds.movieapp.exception.NoticeException"/>
+    <fullyQualifiedTypeName name="org.springframework.web.method.HandlerMethod"/>
 </qualifiedTypeNameHistroy>
