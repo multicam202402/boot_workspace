@@ -9,7 +9,7 @@
 
 	<pre>
 		업로드 결과 <br>  
-		<a href="#">이미지 확인</a>  <br>
+		<a href="#"  th:data-src="${gallery.filename}" onClick="showImg(this)">이미지 확인</a>  <br>
 		<img id="pic" width="200px">	
 	</pre>
 	
@@ -17,7 +17,12 @@
 </html>
 
 <script type="text/javascript">
-
+function showImg(obj){
+	let filename = obj.getAttribute("data-src");
+	
+	$("#pic").attr("src", "/data/"+filename);
+	
+}
 </script>
 
 

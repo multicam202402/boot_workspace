@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sds.uploadproject.domain.Gallery;
+import com.sds.uploadproject.exception.GalleryException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +27,7 @@ public class GalleryService {
 	private ResourceLoader resourceLoader; //클래스패스를 기준으로 경로를 처리할 수 있는 객체
 	
 	//저장 처리 
-	public void save(Gallery gallery) {
+	public void save(Gallery gallery) throws GalleryException{
 		MultipartFile file = gallery.getFile();
 		
 		log.debug("title is "+gallery.getTitle());
@@ -41,8 +42,13 @@ public class GalleryService {
 			Path savePath = path.resolve(file.getOriginalFilename());		
 			Files.copy(file.getInputStream(), savePath);
 			
+			log.debug("savePath = "+savePath.toString());
+			
+			gallery.setFilename(file.getOriginalFilename());//파일명
+			
 		} catch (IOException e) {
 			e.printStackTrace();
+			throw new GalleryException("업로드 실패", e);
 		}
 		
 		
