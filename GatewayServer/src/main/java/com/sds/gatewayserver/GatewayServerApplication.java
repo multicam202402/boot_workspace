@@ -18,8 +18,10 @@ public class GatewayServerApplication {
         		
         	// "/xxxxx" 프리픽스를 제거
 	        .route("movieapp_app", r -> r.path("/movieapp/**").filters(f -> f.stripPrefix(1)).uri("http://localhost:7777"))
+	        //.route("movieapp_app", r -> r.path("/movieapp/**").filters(f -> f.stripPrefix(1)).uri("http://223.130.154.244:7777"))
 	        //.route("movieapp_static_resources", r -> r.path("/static/**").uri("http://localhost:7777"))
 	        
+        	//.route("recommend_app", r -> r.path("/recommend/**").filters(f -> f.stripPrefix(1)).uri("http://223.130.154.244:8282"))
         	.route("recommend_app", r -> r.path("/recommend/**").filters(f -> f.stripPrefix(1)).uri("http://localhost:8282"))
         	//.route("recommend_static_resources", r -> r.path("/static/**").uri("http://localhost:8282"))        	
         	.build();

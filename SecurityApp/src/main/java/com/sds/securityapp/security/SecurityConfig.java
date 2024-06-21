@@ -26,6 +26,11 @@ public class SecurityConfig {
 	@Autowired
 	private AuthenticationConfiguration authenticationConfiguration;
 	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
 	@Bean  //spring legacy mvc 의 경우 <bean class="~~LoginFilter"></bean>
 	public LoginFilter loginFilter() throws Exception{
 		return new LoginFilter( authenticationConfiguration.getAuthenticationManager());

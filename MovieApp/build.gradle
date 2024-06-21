@@ -4,6 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.4'
 }
 
+
 group = 'com.sds'
 version = '0.0.1-SNAPSHOT'
 
@@ -15,6 +16,15 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+}
+
+
+
+apply plugin: 'war'
+
+war{
+    archiveFileName = 'MovieApp.war' // 생성할 WAR 파일명 설정
+    exclude '**/spring-boot-starter-tomcat/**' // 내장 톰캣 관련 의존성 제외	
 }
 
 repositories {
@@ -89,6 +99,8 @@ dependencies {
 	// io.jsonwebtoken
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	
+	
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat' // 톰캣 제공 런타임 설정	
 }
 
 dependencyManagement {

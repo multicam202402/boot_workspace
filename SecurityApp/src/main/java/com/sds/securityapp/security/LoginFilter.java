@@ -32,7 +32,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter{
 	//로그인을 시도하는 메서드
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-		System.out.println("로그인 시도중");
 		log.debug("로그인 시도 중 ");
 		
 		String id=request.getParameter("id");
@@ -43,7 +42,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter{
 		
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(id, pass);
 		
-		return authenticationManager.authenticate(authToken);
+		return authenticationManager.authenticate(authToken); //db 연동(UserDetailsService 에게 일시킴) 후 그 결과 반환...
 	}
 	
 	

@@ -9,6 +9,7 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 @EnableConfigServer//이 어플리케이션을 설정 정보를 제공하는 Config Server로 역할을 하겠다
 public class ConfigServerApplication {
 
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ConfigServerApplication.class, args);
 	}
